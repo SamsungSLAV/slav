@@ -70,3 +70,8 @@ func (l Level) String() string {
 		return "unknown"
 	}
 }
+
+// IsValid verifies if level has a valid value.
+func (l Level) IsValid() bool {
+	return (l <= DebugLevel)
+}

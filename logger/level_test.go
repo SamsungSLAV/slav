@@ -37,4 +37,23 @@ var _ = Describe("Level", func() {
 		T.Entry("DebugLevel", DebugLevel, "debug"),
 		T.Entry("Unknown level", Level(0xBADC0DE), "unknown"),
 	)
+	Describe("IsValid", func() {
+		T.DescribeTable("should treat known log level as valid",
+			func(level Level) {
+				Expect(level.IsValid()).To(BeTrue())
+			},
+			T.Entry("EmergLevel", EmergLevel),
+			T.Entry("AlertLevel", AlertLevel),
+			T.Entry("CritLevel", CritLevel),
+			T.Entry("ErrLevel", ErrLevel),
+			T.Entry("WarningLevel", WarningLevel),
+			T.Entry("NoticeLevel", NoticeLevel),
+			T.Entry("InfoLevel", InfoLevel),
+			T.Entry("DebugLevel", DebugLevel),
+		)
+		It("should treat unknown log level as invalid", func() {
+			badLevel := Level(0xBADC0DE)
+			Expect(badLevel.IsValid()).To(BeFalse())
+		})
+	})
 })
