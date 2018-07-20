@@ -28,3 +28,22 @@ type Backend struct {
 	// Writer writes data to final destination.
 	Writer
 }
+
+// process method filters, serializes and writes log message.
+func (b *Backend) process(entry *Entry) error {
+	pass, err := b.Filter.Verify(entry)
+	if err != nil {
+		return err
+	}
+	if !pass {
+		return nil
+	}
+
+	buf, err := b.Serializer.Serialize(entry)
+	if err != nil {
+		return err
+	}
+
+	_, err = b.Writer.Write(entry.Level, buf)
+	return err
+}
