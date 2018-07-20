@@ -35,6 +35,9 @@ type Logger struct {
 
 	// mutex protects Logger structure from concurrent access.
 	mutex *sync.Mutex
+
+	// backends contains all Backends used currently by the Logger.
+	backends map[string]Backend
 }
 
 // NewLogger creates a new Logger instance with default configuration.
@@ -43,6 +46,7 @@ func NewLogger() *Logger {
 	return &Logger{
 		threshold: DefaultThreshold,
 		mutex:     new(sync.Mutex),
+		backends:  make(map[string]Backend),
 	}
 }
 
@@ -71,6 +75,35 @@ func (l *Logger) PassThreshold(level Level) bool {
 	l.mutex.Lock()
 	defer l.mutex.Unlock()
 	return (level <= l.threshold)
+}
+
+// AddBackend adds or replaces a backend with given name.
+func (l *Logger) AddBackend(name string, b Backend) {
+	l.mutex.Lock()
+	defer l.mutex.Unlock()
+	b.Logger = l
+	l.backends[name] = b
+}
+
+// RemoveBackend removes a backend with given name.
+func (l *Logger) RemoveBackend(name string) error {
+	l.mutex.Lock()
+	defer l.mutex.Unlock()
+
+	_, ok := l.backends[name]
+	if !ok {
+		return ErrInvalidBackendName
+	}
+
+	delete(l.backends, name)
+	return nil
+}
+
+// RemoveAllBackends clears all backends.
+func (l *Logger) RemoveAllBackends() {
+	l.mutex.Lock()
+	defer l.mutex.Unlock()
+	l.backends = make(map[string]Backend)
 }
 
 // newEntry creates a new log entry.

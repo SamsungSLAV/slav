@@ -21,4 +21,7 @@ import "errors"
 var (
 	// ErrInvalidLogLevel is returned in case of unknown log level usage.
 	ErrInvalidLogLevel = errors.New("invalid log level")
+
+	// ErrInvalidBackendName is returned in case of unknown backend name.
+	ErrInvalidBackendName = errors.New("invalid backend name")
 )
