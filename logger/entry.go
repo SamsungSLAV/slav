@@ -48,7 +48,7 @@ func (e *Entry) process(level Level, msg string) {
 	e.Level = level
 	e.Message = msg
 
-	// TODO do the logging stuff.
+	e.Logger.process(e)
 }
 
 // Emergency logs emergency level message.

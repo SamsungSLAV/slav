@@ -17,11 +17,33 @@
 package logger
 
 import (
+	"errors"
+	"io/ioutil"
+	"os"
+
 	gomock "github.com/golang/mock/gomock"
 	. "github.com/onsi/ginkgo"
 	T "github.com/onsi/ginkgo/extensions/table"
 	. "github.com/onsi/gomega"
 )
+
+func withStderrMocked(testFunction func()) string {
+	r, w, _ := os.Pipe()
+
+	tmp := os.Stderr
+	defer func() {
+		os.Stderr = tmp
+	}()
+	os.Stderr = w
+
+	go func() {
+		testFunction()
+		w.Close()
+	}()
+
+	buffer, _ := ioutil.ReadAll(r)
+	return string(buffer)
+}
 
 var _ = Describe("Logger", func() {
 	const (
@@ -208,6 +230,46 @@ var _ = Describe("Logger", func() {
 				L.RemoveAllBackends()
 				expectBackends(Backends{})
 			})
+		})
+	})
+	Describe("process", func() {
+		entry := &Entry{
+			Level:   ErrLevel,
+			Message: "Message",
+		}
+		buf := []byte("Lorem ipsum")
+		testError := errors.New("Test Error")
+		buildError := func(err error, name string) string {
+			return "Error <" + err.Error() + "> printing log message to <" + name + "> backend.\n"
+		}
+		BeforeEach(func() {
+			L.AddBackend(backendName, mb)
+			L.AddBackend(anotherBackendName, amb)
+		})
+		It("should log to all backends", func() {
+			gomock.InOrder(
+				mf.EXPECT().Verify(entry).Return(true, nil),
+				ms.EXPECT().Serialize(entry).Return(buf, nil),
+				mw.EXPECT().Write(entry.Level, buf),
+			)
+			gomock.InOrder(
+				amf.EXPECT().Verify(entry).Return(true, nil),
+				ams.EXPECT().Serialize(entry).Return(buf, nil),
+				amw.EXPECT().Write(entry.Level, buf),
+			)
+			L.process(entry)
+		})
+		It("should print errors to stderr", func() {
+			mf.EXPECT().Verify(entry).Return(false, testError)
+			gomock.InOrder(
+				amf.EXPECT().Verify(entry).Return(true, nil),
+				ams.EXPECT().Serialize(entry).Return([]byte{}, testError),
+			)
+			stderr := withStderrMocked(func() {
+				L.process(entry)
+			})
+			Expect(stderr).To(ContainSubstring(buildError(testError, backendName)))
+			Expect(stderr).To(ContainSubstring(buildError(testError, anotherBackendName)))
 		})
 	})
 })

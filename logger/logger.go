@@ -18,6 +18,8 @@
 package logger
 
 import (
+	"fmt"
+	"os"
 	"sync"
 )
 
@@ -110,6 +112,18 @@ func (l *Logger) RemoveAllBackends() {
 func (l *Logger) newEntry() *Entry {
 	return &Entry{
 		Logger: l,
+	}
+}
+
+// process pass entry to backends.
+func (l *Logger) process(entry *Entry) {
+	l.mutex.Lock()
+	defer l.mutex.Unlock()
+	for name, backend := range l.backends {
+		err := backend.process(entry)
+		if err != nil {
+			fmt.Fprintf(os.Stderr, "Error <%s> printing log message to <%s> backend.\n", err.Error(), name)
+		}
 	}
 }
 
