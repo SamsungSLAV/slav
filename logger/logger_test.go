@@ -49,6 +49,10 @@ var _ = Describe("Logger", func() {
 	const (
 		backendName        = string("backendName")
 		anotherBackendName = string("anotherBackendName")
+		testMessage        = string("Test Message")
+		anotherTestMessage = string("Another Test Message")
+		format             = string("%s >>> %s")
+		expectedMessage    = string(testMessage + " >>> " + anotherTestMessage)
 	)
 	var (
 		ctrl    *gomock.Controller
@@ -270,6 +274,88 @@ var _ = Describe("Logger", func() {
 			})
 			Expect(stderr).To(ContainSubstring(buildError(testError, backendName)))
 			Expect(stderr).To(ContainSubstring(buildError(testError, anotherBackendName)))
+		})
+	})
+	Describe("Log methods", func() {
+		BeforeEach(func() {
+			L.AddBackend(backendName, mb)
+			L.SetThreshold(DebugLevel)
+		})
+		Describe("Log", func() {
+			T.DescribeTable("should properly build log message and pass to logger's backend",
+				func(level Level) {
+					mf.EXPECT().Verify(gomock.Any()).DoAndReturn(func(entry *Entry) (bool, error) {
+						Expect(entry.Level).To(Equal(level))
+						Expect(entry.Message).To(Equal(testMessage + anotherTestMessage))
+						return false, nil
+					})
+					L.Log(level, testMessage, anotherTestMessage)
+				},
+				T.Entry("EmergLevel", EmergLevel),
+				T.Entry("AlertLevel", AlertLevel),
+				T.Entry("CritLevel", CritLevel),
+				T.Entry("ErrLevel", ErrLevel),
+				T.Entry("WarningLevel", WarningLevel),
+				T.Entry("NoticeLevel", NoticeLevel),
+				T.Entry("InfoLevel", InfoLevel),
+				T.Entry("DebugLevel", DebugLevel),
+			)
+			T.DescribeTable("should properly set level and log message and pass to logger's backend",
+				func(level Level, testedFunction func(*Logger, ...interface{})) {
+					mf.EXPECT().Verify(gomock.Any()).DoAndReturn(func(entry *Entry) (bool, error) {
+						Expect(entry.Level).To(Equal(level))
+						Expect(entry.Message).To(Equal(testMessage + anotherTestMessage))
+						return false, nil
+					})
+					testedFunction(L, testMessage, anotherTestMessage)
+				},
+				T.Entry("EmergLevel", EmergLevel, (*Logger).Emergency),
+				T.Entry("AlertLevel", AlertLevel, (*Logger).Alert),
+				T.Entry("CritLevel", CritLevel, (*Logger).Critical),
+				T.Entry("ErrLevel", ErrLevel, (*Logger).Error),
+				T.Entry("WarningLevel", WarningLevel, (*Logger).Warning),
+				T.Entry("NoticeLevel", NoticeLevel, (*Logger).Notice),
+				T.Entry("InfoLevel", InfoLevel, (*Logger).Info),
+				T.Entry("DebugLevel", DebugLevel, (*Logger).Debug),
+			)
+		})
+		Describe("Logf", func() {
+			T.DescribeTable("should properly build log message and pass to logger's backend",
+				func(level Level) {
+					mf.EXPECT().Verify(gomock.Any()).DoAndReturn(func(entry *Entry) (bool, error) {
+						Expect(entry.Level).To(Equal(level))
+						Expect(entry.Message).To(Equal(expectedMessage))
+						return false, nil
+					})
+					L.Logf(level, format, testMessage, anotherTestMessage)
+				},
+				T.Entry("EmergLevel", EmergLevel),
+				T.Entry("AlertLevel", AlertLevel),
+				T.Entry("CritLevel", CritLevel),
+				T.Entry("ErrLevel", ErrLevel),
+				T.Entry("WarningLevel", WarningLevel),
+				T.Entry("NoticeLevel", NoticeLevel),
+				T.Entry("InfoLevel", InfoLevel),
+				T.Entry("DebugLevel", DebugLevel),
+			)
+			T.DescribeTable("should properly set level and log message and pass to logger's backend",
+				func(level Level, testedFunction func(*Logger, string, ...interface{})) {
+					mf.EXPECT().Verify(gomock.Any()).DoAndReturn(func(entry *Entry) (bool, error) {
+						Expect(entry.Level).To(Equal(level))
+						Expect(entry.Message).To(Equal(expectedMessage))
+						return false, nil
+					})
+					testedFunction(L, format, testMessage, anotherTestMessage)
+				},
+				T.Entry("EmergLevel", EmergLevel, (*Logger).Emergencyf),
+				T.Entry("AlertLevel", AlertLevel, (*Logger).Alertf),
+				T.Entry("CritLevel", CritLevel, (*Logger).Criticalf),
+				T.Entry("ErrLevel", ErrLevel, (*Logger).Errorf),
+				T.Entry("WarningLevel", WarningLevel, (*Logger).Warningf),
+				T.Entry("NoticeLevel", NoticeLevel, (*Logger).Noticef),
+				T.Entry("InfoLevel", InfoLevel, (*Logger).Infof),
+				T.Entry("DebugLevel", DebugLevel, (*Logger).Debugf),
+			)
 		})
 	})
 })
