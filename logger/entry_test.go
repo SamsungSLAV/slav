@@ -18,6 +18,7 @@ package logger
 
 import (
 	"errors"
+	"time"
 
 	gomock "github.com/golang/mock/gomock"
 	. "github.com/onsi/ginkgo"
@@ -67,10 +68,13 @@ var _ = Describe("Entry", func() {
 	})
 
 	Describe("process", func() {
-		It("should set level and message and pass entry to Logger's backends", func() {
+		It("should set level, message and timestamp, and pass entry to Logger's backends", func() {
+			before := time.Now()
 			mf.EXPECT().Verify(entry).DoAndReturn(func(entry *Entry) (bool, error) {
 				Expect(entry.Level).To(Equal(WarningLevel))
 				Expect(entry.Message).To(Equal(testMessage))
+				Expect(entry.Timestamp).To(BeTemporally(">", before))
+				Expect(entry.Timestamp).To(BeTemporally("<", time.Now()))
 				return false, nil
 			})
 			entry.process(WarningLevel, testMessage)
@@ -80,6 +84,7 @@ var _ = Describe("Entry", func() {
 			entry.process(WarningLevel, testMessage)
 			Expect(entry.Level).To(BeZero())
 			Expect(entry.Message).To(BeZero())
+			Expect(entry.Timestamp).To(BeZero())
 		})
 	})
 	Describe("Log", func() {

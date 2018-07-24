@@ -18,6 +18,7 @@ package logger
 
 import (
 	"fmt"
+	"time"
 )
 
 // Entry defines a single log message entity.
@@ -30,6 +31,8 @@ type Entry struct {
 	Message string
 	// Properties hold key-value pairs of log message properties.
 	Properties Properties
+	// Timestamp stores point in time of log message creation.
+	Timestamp time.Time
 }
 
 // Log builds log message and logs entry.
@@ -49,6 +52,7 @@ func (e *Entry) process(level Level, msg string) {
 	}
 	e.Level = level
 	e.Message = msg
+	e.Timestamp = time.Now()
 
 	e.Logger.process(e)
 }
