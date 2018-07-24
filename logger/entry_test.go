@@ -17,6 +17,8 @@
 package logger
 
 import (
+	"errors"
+
 	gomock "github.com/golang/mock/gomock"
 	. "github.com/onsi/ginkgo"
 	T "github.com/onsi/ginkgo/extensions/table"
@@ -54,7 +56,10 @@ var _ = Describe("Entry", func() {
 
 		L = NewLogger()
 		L.AddBackend(backendName, mb)
-		entry = &Entry{Logger: L}
+		entry = &Entry{
+			Logger:     L,
+			Properties: make(Properties),
+		}
 		L.SetThreshold(DebugLevel)
 	})
 	AfterEach(func() {
@@ -144,5 +149,101 @@ var _ = Describe("Entry", func() {
 			T.Entry("InfoLevel", InfoLevel, (*Entry).Infof),
 			T.Entry("DebugLevel", DebugLevel, (*Entry).Debugf),
 		)
+	})
+	Describe("Properties", func() {
+		const (
+			property                  = "property"
+			value                     = "value"
+			anotherProperty           = "another property"
+			anotherValue              = "another value"
+			completelyAnotherProperty = "completely another property"
+			completelyAnotherValue    = "completely another value"
+		)
+		var (
+			errorValue        = errors.New("error value")
+			anotherErrorValue = errors.New("another error value")
+		)
+		It("should add a property", func() {
+			Expect(entry.Properties).To(BeEmpty())
+
+			e := entry.WithProperty(property, value)
+			Expect(e).To(Equal(entry))
+			Expect(entry.Properties).To(HaveLen(1))
+			Expect(entry.Properties).To(HaveKeyWithValue(property, value))
+		})
+		It("should overwrite a property", func() {
+			Expect(entry.Properties).To(BeEmpty())
+			entry.WithProperty(property, value)
+
+			e := entry.WithProperty(property, anotherValue)
+			Expect(e).To(Equal(entry))
+			Expect(entry.Properties).To(HaveLen(1))
+			Expect(entry.Properties).To(HaveKeyWithValue(property, anotherValue))
+		})
+		It("should add properties", func() {
+			Expect(entry.Properties).To(BeEmpty())
+
+			e := entry.WithProperties(Properties{
+				property:        value,
+				anotherProperty: anotherValue,
+			})
+			Expect(e).To(Equal(entry))
+			Expect(entry.Properties).To(HaveLen(2))
+			Expect(entry.Properties).To(HaveKeyWithValue(property, value))
+			Expect(entry.Properties).To(HaveKeyWithValue(anotherProperty, anotherValue))
+		})
+		It("should update properties", func() {
+			Expect(entry.Properties).To(BeEmpty())
+			entry.WithProperties(Properties{
+				property:        value,
+				anotherProperty: anotherValue,
+			})
+
+			e := entry.WithProperties(Properties{
+				property:                  anotherValue,
+				completelyAnotherProperty: completelyAnotherValue,
+			})
+			Expect(e).To(Equal(entry))
+			Expect(entry.Properties).To(HaveLen(3))
+			// Updated by 2nd call.
+			Expect(entry.Properties).To(HaveKeyWithValue(property, anotherValue))
+			// Not changed since 1st call.
+			Expect(entry.Properties).To(HaveKeyWithValue(anotherProperty, anotherValue))
+			// Added by a 2nd call.
+			Expect(entry.Properties).To(HaveKeyWithValue(completelyAnotherProperty,
+				completelyAnotherValue))
+		})
+		It("should add an error property", func() {
+			Expect(entry.Properties).To(BeEmpty())
+
+			e := entry.WithError(errorValue)
+			Expect(e).To(Equal(entry))
+			Expect(entry.Properties).To(HaveLen(1))
+			Expect(entry.Properties).To(HaveKeyWithValue(ErrorProperty, errorValue.Error()))
+		})
+		It("should overwrite an error property", func() {
+			Expect(entry.Properties).To(BeEmpty())
+			entry.WithError(errorValue)
+
+			e := entry.WithError(anotherErrorValue)
+			Expect(e).To(Equal(entry))
+			Expect(entry.Properties).To(HaveLen(1))
+			Expect(entry.Properties).To(HaveKeyWithValue(ErrorProperty, anotherErrorValue.Error()))
+		})
+		It("should create properties map if nil", func() {
+			Expect(entry.Properties).NotTo(BeNil())
+			entry.Properties = nil
+			Expect(entry.Properties).To(BeNil())
+
+			e := entry.WithProperties(Properties{
+				property:        value,
+				anotherProperty: anotherValue,
+			})
+			Expect(e).To(Equal(entry))
+			Expect(entry.Properties).NotTo(BeNil())
+			Expect(entry.Properties).To(HaveLen(2))
+			Expect(entry.Properties).To(HaveKeyWithValue(property, value))
+			Expect(entry.Properties).To(HaveKeyWithValue(anotherProperty, anotherValue))
+		})
 	})
 })

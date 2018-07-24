@@ -28,6 +28,8 @@ type Entry struct {
 	Level Level
 	// Message contains actual log message.
 	Message string
+	// Properties hold key-value pairs of log message properties.
+	Properties Properties
 }
 
 // Log builds log message and logs entry.
@@ -129,4 +131,25 @@ func (e *Entry) Infof(format string, args ...interface{}) {
 // Debugf logs debug level formatted message.
 func (e *Entry) Debugf(format string, args ...interface{}) {
 	e.Logf(DebugLevel, format, args...)
+}
+
+// WithProperty adds a single property to the log message.
+func (e *Entry) WithProperty(key string, value interface{}) *Entry {
+	return e.WithProperties(Properties{key: value})
+}
+
+// WithProperties adds properties to the log message.
+func (e *Entry) WithProperties(props Properties) *Entry {
+	if e.Properties == nil {
+		e.Properties = make(Properties)
+	}
+	for k, v := range props {
+		e.Properties[k] = v
+	}
+	return e
+}
+
+// WithError adds error property to the log message.
+func (e *Entry) WithError(err error) *Entry {
+	return e.WithProperty(ErrorProperty, err.Error())
 }

@@ -363,4 +363,34 @@ var _ = Describe("Logger", func() {
 			)
 		})
 	})
+	Describe("Properties", func() {
+		const (
+			property        = "property"
+			value           = "value"
+			anotherProperty = "another property"
+			anotherValue    = "another value"
+		)
+		var (
+			errorValue = errors.New("error value")
+		)
+		It("should create a new log message with a property", func() {
+			entry := L.WithProperty(property, value)
+			Expect(entry.Properties).To(HaveLen(1))
+			Expect(entry.Properties).To(HaveKeyWithValue(property, value))
+		})
+		It("should create a new log message with multiple properties", func() {
+			entry := L.WithProperties(Properties{
+				property:        value,
+				anotherProperty: anotherValue,
+			})
+			Expect(entry.Properties).To(HaveLen(2))
+			Expect(entry.Properties).To(HaveKeyWithValue(property, value))
+			Expect(entry.Properties).To(HaveKeyWithValue(anotherProperty, anotherValue))
+		})
+		It("should create a new log message with an error property", func() {
+			entry := L.WithError(errorValue)
+			Expect(entry.Properties).To(HaveLen(1))
+			Expect(entry.Properties).To(HaveKeyWithValue(ErrorProperty, errorValue.Error()))
+		})
+	})
 })

@@ -111,7 +111,8 @@ func (l *Logger) RemoveAllBackends() {
 // newEntry creates a new log entry.
 func (l *Logger) newEntry() *Entry {
 	return &Entry{
-		Logger: l,
+		Logger:     l,
+		Properties: make(Properties),
 	}
 }
 
@@ -217,4 +218,19 @@ func (l *Logger) Infof(format string, args ...interface{}) {
 // Debugf logs debug level formatted message.
 func (l *Logger) Debugf(format string, args ...interface{}) {
 	l.newEntry().Debugf(format, args...)
+}
+
+// WithProperty creates a log message with a single property.
+func (l *Logger) WithProperty(key string, value interface{}) *Entry {
+	return l.newEntry().WithProperty(key, value)
+}
+
+// WithProperties creates a log message with multiple properties.
+func (l *Logger) WithProperties(props Properties) *Entry {
+	return l.newEntry().WithProperties(props)
+}
+
+// WithError creates a log message with an error property.
+func (l *Logger) WithError(err error) *Entry {
+	return l.newEntry().WithError(err)
 }
