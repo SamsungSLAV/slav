@@ -21,6 +21,7 @@ import (
 	"fmt"
 	"os"
 	"sync"
+	"sync/atomic"
 )
 
 const (
@@ -59,24 +60,18 @@ func (l *Logger) SetThreshold(level Level) error {
 		return ErrInvalidLogLevel
 	}
 
-	l.mutex.Lock()
-	defer l.mutex.Unlock()
-	l.threshold = level
+	atomic.StoreUint32((*uint32)(&l.threshold), uint32(level))
 	return nil
 }
 
 // Threshold returns current Logger's filter level.
 func (l *Logger) Threshold() Level {
-	l.mutex.Lock()
-	defer l.mutex.Unlock()
-	return l.threshold
+	return Level(atomic.LoadUint32((*uint32)(&l.threshold)))
 }
 
 // PassThreshold verifies if message with given level passes threshold and should be logged.
 func (l *Logger) PassThreshold(level Level) bool {
-	l.mutex.Lock()
-	defer l.mutex.Unlock()
-	return (level <= l.threshold)
+	return (level <= l.Threshold())
 }
 
 // AddBackend adds or replaces a backend with given name.

@@ -93,9 +93,9 @@ var _ = Describe("Logger", func() {
 		It("should create a new default logger object", func() {
 			Expect(L).NotTo(BeNil())
 			Expect(L.mutex).NotTo(BeNil())
+			Expect(L.threshold).To(Equal(DefaultThreshold))
 			L.mutex.Lock()
 			defer L.mutex.Unlock()
-			Expect(L.threshold).To(Equal(DefaultThreshold))
 			Expect(L.backends).To(BeEmpty())
 		})
 	})
@@ -105,8 +105,6 @@ var _ = Describe("Logger", func() {
 				func(level Level) {
 					err := L.SetThreshold(level)
 					Expect(err).NotTo(HaveOccurred())
-					L.mutex.Lock()
-					defer L.mutex.Unlock()
 					Expect(L.threshold).To(Equal(level))
 				},
 				T.Entry("EmergLevel", EmergLevel),
