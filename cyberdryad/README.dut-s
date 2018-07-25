@@ -1,0 +1,23 @@
+# Setting up DUT supervisor
+
+Use following invocation to setup dut-s lxc container, which will
+serve as DUT supervisor:
+
+  sudo ./dut-s-lxc-setup.sh
+
+**Beware** This script will destroy existing container named
+(by default) dut-s!  You can change default container name
+by defining DUT_VM_NAME variable.
+
+## Prerequisites
+
+Assuming Ubuntu 16.04 x86_64 is used please ensure following packages
+are installed:
+
+* lxc
+* uuid-runtime
+
+If for some reason setup inside lxc has failed (eg. due to network
+problems) you can try to repeat just this part:
+
+  sudo lxc-attach -n dut-s dut-s-reconfigure.sh
