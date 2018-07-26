@@ -15,15 +15,6 @@ apt_setup()
     apt-get install -y golang-1.10-go
 }
 
-users_setup()
-{
-    getent passwd boruta-user || adduser --shell /bin/bash boruta-user </dev/null
-    getent group kvm | grep -q boruta-user || adduser boruta-user kvm
-    getent group libvirtd | grep -q boruta-user || adduser boruta-user libvirtd
-    getent group stm || addgroup --system stm
-    getent group stm | grep -q boruta-user || adduser boruta-user stm
-}
-
 dryad_setup()
 {
     mkdir -p /etc/boruta
@@ -33,10 +24,11 @@ dryad_setup()
     sed -i \
         -e 's,boruta_address =.*,boruta_address = "'${BORUTA_ADDRESS}:${BORUTA_PORT}'",' \
         -e "/\[caps\]/ a device_type = \"qemu\"\narchitecture = \"$ARCH\"\nUUID = \"$UUID\"" \
+        -e 's!groups =.*!groups = [ "kvm", "libvirtd", "stm" ]!' \
         /etc/boruta/dryad.conf
 }
 
-stm_unit_install()
+stm_setup()
 {
     muxpi_path="$1"
     install -m0644 "${muxpi_path}/sw/nanopi/stm.service" "$UNITDIR/stm.service"
@@ -44,8 +36,9 @@ stm_unit_install()
     install -m0644 "${muxpi_path}/sw/nanopi/stm.socket" "$UNITDIR/stm.socket"
     install -m0644 "${muxpi_path}/sw/nanopi/stm-user.socket" "$UNITDIR/stm-user.socket"
     sed -i -e "s,/usr/bin,$DESTDIR/bin,g" -e "s,WantedBy=sockets.target,WantedBy=basic.target," "$UNITDIR/stm.service" "$UNITDIR/stm.socket" "$UNITDIR/stm-user.socket"
-
     UNITS2ENABLE="$UNITS2ENABLE stm.socket stm-user.socket"
+
+    getent group stm || addgroup --system stm
 }
 
 dryad_unit_install()
@@ -92,7 +85,7 @@ slav_setup()
 
     dryad_setup
     dryad_unit_install
-    stm_unit_install "$SRC/tools/muxpi"
+    stm_setup "$SRC/tools/muxpi"
     systemd_unit_enable
 }
 
@@ -102,5 +95,4 @@ slav_setup()
 . /var/tmp/dut-s-setup.env
 
 apt_setup
-users_setup
 slav_setup
