@@ -32,7 +32,7 @@ stm_setup()
 {
     muxpi_path="$1"
     install -m0644 "${muxpi_path}/sw/nanopi/stm.service" "$UNITDIR/stm.service"
-    sed -i -e 's/-serve/-serve -dummy/' "$UNITDIR/stm.service"
+    sed -i -e 's/stm -serve/stm.real -serve -dummy/' "$UNITDIR/stm.service"
     install -m0644 "${muxpi_path}/sw/nanopi/stm.socket" "$UNITDIR/stm.socket"
     install -m0644 "${muxpi_path}/sw/nanopi/stm-user.socket" "$UNITDIR/stm-user.socket"
     sed -i -e "s,/usr/bin,$DESTDIR/bin,g" -e "s,WantedBy=sockets.target,WantedBy=basic.target," "$UNITDIR/stm.service" "$UNITDIR/stm.socket" "$UNITDIR/stm-user.socket"
@@ -82,7 +82,9 @@ slav_setup()
 
     export GOPATH="$D"
     (cd "$D" && $GO get ./...)
-    install -m0755 -t "$DESTDIR/bin" "$GOPATH/bin/stm" "$GOPATH/bin/dryad"
+    install -m0755 -t "$DESTDIR/bin" "$SRC/tools/muxpi/sw/nanopi/os/usr/local/bin/stm" "$GOPATH/bin/dryad"
+    install -m0755 "$GOPATH/bin/stm" "$DESTDIR/bin/stm.real"
+    sed -i -e "s,/usr/bin/stm,$DESTDIR/bin/stm.real," "$DESTDIR/bin/stm"
 
     dryad_setup
     dryad_unit_install
