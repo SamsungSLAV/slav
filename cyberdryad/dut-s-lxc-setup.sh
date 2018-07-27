@@ -46,6 +46,6 @@ sleep 5
 tools_install "$DESTDIR"
 tools_setup
 
-lxc-stop -r -n "$VM_NAME"
+lxc-stop -r -n "$VM_NAME" || true
 
 echo "DUT-supervisor successfully created as lxc $VM_NAME container"
