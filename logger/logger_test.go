@@ -18,32 +18,12 @@ package logger
 
 import (
 	"errors"
-	"io/ioutil"
-	"os"
 
 	gomock "github.com/golang/mock/gomock"
 	. "github.com/onsi/ginkgo"
 	T "github.com/onsi/ginkgo/extensions/table"
 	. "github.com/onsi/gomega"
 )
-
-func withStderrMocked(testFunction func()) string {
-	r, w, _ := os.Pipe()
-
-	tmp := os.Stderr
-	defer func() {
-		os.Stderr = tmp
-	}()
-	os.Stderr = w
-
-	go func() {
-		testFunction()
-		w.Close()
-	}()
-
-	buffer, _ := ioutil.ReadAll(r)
-	return string(buffer)
-}
 
 var _ = Describe("Logger", func() {
 	const (
