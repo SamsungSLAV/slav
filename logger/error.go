@@ -24,4 +24,7 @@ var (
 
 	// ErrInvalidBackendName is returned in case of unknown backend name.
 	ErrInvalidBackendName = errors.New("invalid backend name")
+
+	// ErrInvalidEntry is returned in case of invalid entry struct.
+	ErrInvalidEntry = errors.New("invalid log entry structure")
 )
