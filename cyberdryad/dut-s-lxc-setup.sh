@@ -12,7 +12,7 @@ UUID=$(uuidgen -r)
 
 lxc_install() {
     lxc-destroy -f -n "$VM_NAME" || true
-    lxc-create -n "$VM_NAME" -t ubuntu -- -r xenial --packages=virtinst,libvirt-bin,libvirt-daemon,qemu-kvm,qemu-utils,openssh-server,wget,expect,git,libsystemd-dev
+    lxc-create -n "$VM_NAME" -t ubuntu -- -r xenial --packages=virtinst,libvirt-bin,libvirt-daemon,qemu-kvm,qemu-utils,openssh-server,wget,expect,git,libsystemd-dev,sshfs
     # print big scarry warning if network is not setup correctly
     if ! grep -q 'lxc.network.type.*veth' "/var/lib/lxc/$VM_NAME/config"; then
         echo "@@@ warning: this script assumes lxc uses veth<->lxcbr0 networking setup BY DEFAULT @@@"

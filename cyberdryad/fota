@@ -1,0 +1,62 @@
+#!/bin/sh
+
+# This file implements "fota" interface as called by Weles
+#   fota URLs.. -card <> -map <> -md5 <> -q
+#
+# Note: card and map params are ignored as these do not
+# make sense in VM context.
+#
+# XXX: support -md5 and -q
+
+set -x
+
+cleanup()
+{
+    rm "$tmpfile"
+}
+
+tmpfile="$(mktemp /tmp/fota.XXXXXX)"
+trap cleanup 0
+
+srcimage="$tmpfile"
+
+while [ $# -ne 0 ]
+do
+    echo "arg: $1"
+
+    if [ "${1#-}" != "$1" ]; then
+       echo "skipping: $1 $2"
+       shift 2
+       continue
+    fi
+
+    if [ -e "$1" ]; then
+        srcimage="$1"
+        break
+    fi
+
+    if ! wget -c "$1" -O "$tmpfile"; then
+        echo "Unable to download image from: $1"
+        exit 1
+    fi
+
+    break
+
+done
+
+if [ ! -s "$srcimage" ]; then
+    echo "DUT image has zero size - can not continue.  Exiting."
+    exit 1
+fi
+
+
+ch="--connect qemu:///system"
+v="virsh $ch"
+
+$v destroy dut
+$v undefine dut
+
+image=/var/dut/dut-image
+cp -vf "$srcimage" "$image"
+
+virt-install $ch -n dut --memory 96 --disk none --vcpus 1 --cpu host --cdrom "$image" --network network=dut-network,model=virtio --noautoconsole

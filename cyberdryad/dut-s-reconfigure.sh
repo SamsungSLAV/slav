@@ -8,6 +8,11 @@ ARCH="$(uname -m)"
 UNITDIR="/etc/systemd/system"
 UNIT2ENABLE=""
 
+storage_setup()
+{
+    mkdir -m 1777 /var/dut
+}
+
 apt_setup()
 {
     echo 'deb http://archive.ubuntu.com/ubuntu xenial-backports main restricted universe multiverse' > /etc/apt/sources.list.d/dut-s-xenial-backports.list
@@ -50,6 +55,7 @@ Requires=stm.socket
 
 [Service]
 Type=simple
+ExecStartPre=-/bin/mknod -m 0666 /dev/fuse c 10 229
 ExecStart=$DESTDIR/bin/dryad
 Restart=always
 
@@ -98,4 +104,5 @@ slav_setup()
 . /var/tmp/dut-s-setup.env
 
 apt_setup
+storage_setup
 slav_setup
