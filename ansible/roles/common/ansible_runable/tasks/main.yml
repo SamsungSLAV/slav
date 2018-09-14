@@ -1,0 +1,9 @@
+---
+- name: Ensure correct links
+  raw: apt-get update
+
+- name: Ensure that python is present
+  raw: test -e python || apt-get install -y python
+
+- name: Ensure that python apt module is present
+  raw: python -c 'import apt' || apt-get install -y python-apt

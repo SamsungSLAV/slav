@@ -1,0 +1,13 @@
+---
+- name: Prepare servers
+  hosts: all_srvs
+  gather_facts: False # Default Ubuntu Cloud image comes without python; gathering facts without interpreter fails
+  become: yes
+  roles:
+      - common/ansible_runable
+      - common/packages_uptodate
+
+- name: Deploy Boruta
+  hosts: boruta_srv
+  roles:
+      - slav/boruta
