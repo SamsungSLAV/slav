@@ -64,92 +64,92 @@ func RemoveAllBackends() {
 
 // Log builds log message and logs entry to default logger.
 func Log(level Level, args ...interface{}) {
-	defaultLogger.Log(level, args...)
+	defaultLogger.IncDepth(1).Log(level, args...)
 }
 
 // Logf builds formatted log message and logs entry to default logger.
 func Logf(level Level, format string, args ...interface{}) {
-	defaultLogger.Logf(level, format, args...)
+	defaultLogger.IncDepth(1).Logf(level, format, args...)
 }
 
 // Emergency logs emergency level message to default logger.
 func Emergency(args ...interface{}) {
-	defaultLogger.Emergency(args...)
+	defaultLogger.IncDepth(1).Emergency(args...)
 }
 
 // Alert logs alert level message to default logger.
 func Alert(args ...interface{}) {
-	defaultLogger.Alert(args...)
+	defaultLogger.IncDepth(1).Alert(args...)
 }
 
 // Critical logs critical level message to default logger.
 func Critical(args ...interface{}) {
-	defaultLogger.Critical(args...)
+	defaultLogger.IncDepth(1).Critical(args...)
 }
 
 // Error logs error level message to default logger.
 func Error(args ...interface{}) {
-	defaultLogger.Error(args...)
+	defaultLogger.IncDepth(1).Error(args...)
 }
 
 // Warning logs warning level message to default logger.
 func Warning(args ...interface{}) {
-	defaultLogger.Warning(args...)
+	defaultLogger.IncDepth(1).Warning(args...)
 }
 
 // Notice logs notice level message to default logger.
 func Notice(args ...interface{}) {
-	defaultLogger.Notice(args...)
+	defaultLogger.IncDepth(1).Notice(args...)
 }
 
 // Info logs info level message to default logger.
 func Info(args ...interface{}) {
-	defaultLogger.Info(args...)
+	defaultLogger.IncDepth(1).Info(args...)
 }
 
 // Debug logs debug level message to default logger.
 func Debug(args ...interface{}) {
-	defaultLogger.Debug(args...)
+	defaultLogger.IncDepth(1).Debug(args...)
 }
 
 // Emergencyf logs emergency level formatted message to default logger.
 func Emergencyf(format string, args ...interface{}) {
-	defaultLogger.Emergencyf(format, args...)
+	defaultLogger.IncDepth(1).Emergencyf(format, args...)
 }
 
 // Alertf logs alert level formatted message to default logger.
 func Alertf(format string, args ...interface{}) {
-	defaultLogger.Alertf(format, args...)
+	defaultLogger.IncDepth(1).Alertf(format, args...)
 }
 
 // Criticalf logs critical level formatted message to default logger.
 func Criticalf(format string, args ...interface{}) {
-	defaultLogger.Criticalf(format, args...)
+	defaultLogger.IncDepth(1).Criticalf(format, args...)
 }
 
 // Errorf logs error level formatted message to default logger.
 func Errorf(format string, args ...interface{}) {
-	defaultLogger.Errorf(format, args...)
+	defaultLogger.IncDepth(1).Errorf(format, args...)
 }
 
 // Warningf logs warning level formatted message to default logger.
 func Warningf(format string, args ...interface{}) {
-	defaultLogger.Warningf(format, args...)
+	defaultLogger.IncDepth(1).Warningf(format, args...)
 }
 
 // Noticef logs notice level formatted message to default logger.
 func Noticef(format string, args ...interface{}) {
-	defaultLogger.Noticef(format, args...)
+	defaultLogger.IncDepth(1).Noticef(format, args...)
 }
 
 // Infof logs info level formatted message to default logger.
 func Infof(format string, args ...interface{}) {
-	defaultLogger.Infof(format, args...)
+	defaultLogger.IncDepth(1).Infof(format, args...)
 }
 
 // Debugf logs debug level formatted message to default logger.
 func Debugf(format string, args ...interface{}) {
-	defaultLogger.Debugf(format, args...)
+	defaultLogger.IncDepth(1).Debugf(format, args...)
 }
 
 // WithProperty creates a log message with a single property in default logger.
@@ -165,4 +165,9 @@ func WithProperties(props Properties) *Entry {
 // WithError creates a log message with an error property in default logger.
 func WithError(err error) *Entry {
 	return defaultLogger.WithError(err)
+}
+
+// IncDepth increases depth of an Entry for call stack calculations.
+func IncDepth(dep int) *Entry {
+	return defaultLogger.IncDepth(dep)
 }

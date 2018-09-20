@@ -18,6 +18,8 @@ package logger
 
 import (
 	"errors"
+	"fmt"
+	"runtime"
 	"time"
 
 	gomock "github.com/golang/mock/gomock"
@@ -33,6 +35,8 @@ var _ = Describe("Entry", func() {
 		anotherTestMessage = string("Another Test Message")
 		format             = string("%s >>> %s")
 		expectedMessage    = string(testMessage + " >>> " + anotherTestMessage)
+		thisFile           = string("entry_test.go")
+		thisPackage        = string("git.tizen.org/tools/slav/logger")
 	)
 	var (
 		ctrl  *gomock.Controller
@@ -71,12 +75,31 @@ var _ = Describe("Entry", func() {
 		It("should set level, message and timestamp, and pass entry to Logger's backends", func() {
 			before := time.Now()
 			mf.EXPECT().Verify(entry).DoAndReturn(func(entry *Entry) (bool, error) {
+				_, _, line, _ := runtime.Caller(0)
 				Expect(entry.Level).To(Equal(WarningLevel))
 				Expect(entry.Message).To(Equal(testMessage))
 				Expect(entry.Timestamp).To(BeTemporally(">", before))
 				Expect(entry.Timestamp).To(BeTemporally("<", time.Now()))
+				Expect(entry.CallContext).NotTo(BeNil())
+				Expect(entry.CallContext.Line).To(Equal(line + 11))
+				Expect(entry.CallContext.File).To(Equal(thisFile))
+				Expect(entry.CallContext.Package).To(Equal(thisPackage))
 				return false, nil
 			})
+			entry.process(WarningLevel, testMessage)
+		})
+		It("should not set CallContext it it cannot be get", func() {
+			before := time.Now()
+			mf.EXPECT().Verify(entry).DoAndReturn(func(entry *Entry) (bool, error) {
+				Expect(entry.Level).To(Equal(WarningLevel))
+				Expect(entry.Message).To(Equal(testMessage))
+				Expect(entry.Timestamp).To(BeTemporally(">", before))
+				Expect(entry.Timestamp).To(BeTemporally("<", time.Now()))
+				Expect(entry.CallContext).To(BeNil())
+				return false, nil
+			})
+			// Ask for context deeper than call stack depth.
+			entry.IncDepth(100000)
 			entry.process(WarningLevel, testMessage)
 		})
 		It("should not set anything and return if level doesn't pass threshold", func() {
@@ -85,15 +108,21 @@ var _ = Describe("Entry", func() {
 			Expect(entry.Level).To(BeZero())
 			Expect(entry.Message).To(BeZero())
 			Expect(entry.Timestamp).To(BeZero())
+			Expect(entry.CallContext).To(BeNil())
 		})
 	})
 	Describe("Log", func() {
 		T.DescribeTable("should properly build log message and pass to backends",
 			func(level Level) {
 				mf.EXPECT().Verify(entry).Return(false, nil)
+				_, _, line, _ := runtime.Caller(0)
 				entry.Log(level, testMessage, anotherTestMessage)
 				Expect(entry.Level).To(Equal(level))
 				Expect(entry.Message).To(Equal(testMessage + anotherTestMessage))
+				Expect(entry.CallContext).NotTo(BeNil())
+				Expect(entry.CallContext.Line).To(Equal(line + 1))
+				Expect(entry.CallContext.File).To(Equal(thisFile))
+				Expect(entry.CallContext.Package).To(Equal(thisPackage))
 			},
 			T.Entry("EmergLevel", EmergLevel),
 			T.Entry("AlertLevel", AlertLevel),
@@ -107,9 +136,14 @@ var _ = Describe("Entry", func() {
 		T.DescribeTable("should properly set level and log message and pass to logger's backend",
 			func(level Level, testedFunction func(*Entry, ...interface{})) {
 				mf.EXPECT().Verify(entry).Return(false, nil)
+				_, _, line, _ := runtime.Caller(0)
 				testedFunction(entry, testMessage, anotherTestMessage)
 				Expect(entry.Level).To(Equal(level))
 				Expect(entry.Message).To(Equal(testMessage + anotherTestMessage))
+				Expect(entry.CallContext).NotTo(BeNil())
+				Expect(entry.CallContext.Line).To(Equal(line + 1))
+				Expect(entry.CallContext.File).To(Equal(thisFile))
+				Expect(entry.CallContext.Package).To(Equal(thisPackage))
 			},
 			T.Entry("EmergLevel", EmergLevel, (*Entry).Emergency),
 			T.Entry("AlertLevel", AlertLevel, (*Entry).Alert),
@@ -125,9 +159,14 @@ var _ = Describe("Entry", func() {
 		T.DescribeTable("should properly build log message and pass to logger's backend",
 			func(level Level) {
 				mf.EXPECT().Verify(entry).Return(false, nil)
+				_, _, line, _ := runtime.Caller(0)
 				entry.Logf(level, format, testMessage, anotherTestMessage)
 				Expect(entry.Level).To(Equal(level))
 				Expect(entry.Message).To(Equal(expectedMessage))
+				Expect(entry.CallContext).NotTo(BeNil())
+				Expect(entry.CallContext.Line).To(Equal(line + 1))
+				Expect(entry.CallContext.File).To(Equal(thisFile))
+				Expect(entry.CallContext.Package).To(Equal(thisPackage))
 			},
 			T.Entry("EmergLevel", EmergLevel),
 			T.Entry("AlertLevel", AlertLevel),
@@ -141,9 +180,14 @@ var _ = Describe("Entry", func() {
 		T.DescribeTable("should properly set level and log message and pass to logger's backend",
 			func(level Level, testedFunction func(*Entry, string, ...interface{})) {
 				mf.EXPECT().Verify(entry).Return(false, nil)
+				_, _, line, _ := runtime.Caller(0)
 				testedFunction(entry, format, testMessage, anotherTestMessage)
 				Expect(entry.Level).To(Equal(level))
 				Expect(entry.Message).To(Equal(expectedMessage))
+				Expect(entry.CallContext).NotTo(BeNil())
+				Expect(entry.CallContext.Line).To(Equal(line + 1))
+				Expect(entry.CallContext.File).To(Equal(thisFile))
+				Expect(entry.CallContext.Package).To(Equal(thisPackage))
 			},
 			T.Entry("EmergLevel", EmergLevel, (*Entry).Emergencyf),
 			T.Entry("AlertLevel", AlertLevel, (*Entry).Alertf),
@@ -249,6 +293,19 @@ var _ = Describe("Entry", func() {
 			Expect(entry.Properties).To(HaveLen(2))
 			Expect(entry.Properties).To(HaveKeyWithValue(property, value))
 			Expect(entry.Properties).To(HaveKeyWithValue(anotherProperty, anotherValue))
+		})
+	})
+	Describe("IncDepth", func() {
+		const dep = 67
+		It("should increase depth of entry call stack", func() {
+			Expect(entry.depth).To(BeZero())
+
+			for i := 0; i < 3; i++ {
+				By(fmt.Sprintf("i = %d", i))
+				e := entry.IncDepth(dep)
+				Expect(e).To(Equal(entry))
+				Expect(entry.depth).To(Equal((i + 1) * dep))
+			}
 		})
 	})
 })

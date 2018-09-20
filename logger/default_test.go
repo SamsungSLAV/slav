@@ -18,6 +18,8 @@ package logger
 
 import (
 	"errors"
+	"runtime"
+	"strconv"
 
 	gomock "github.com/golang/mock/gomock"
 	. "github.com/onsi/ginkgo"
@@ -33,6 +35,8 @@ var _ = Describe("Default", func() {
 		anotherTestMessage = string("Another Test Message")
 		format             = string("%s >>> %s")
 		expectedMessage    = string(testMessage + " >>> " + anotherTestMessage)
+		thisFile           = string("default_test.go")
+		thisPackage        = string("git.tizen.org/tools/slav/logger")
 	)
 
 	It("defaultLogger should be already initialized", func() {
@@ -56,7 +60,9 @@ var _ = Describe("Default", func() {
 				"issues": "",
 			}).Emergencyf("test <%s>:%d log", "string", 67)
 		})
-		expected := "[" + red + bold + invert + "EME" + off + `] "test <string>:67 log" {` +
+		_, _, line, _ := runtime.Caller(0)
+		expected := "[" + red + bold + invert + "EME" + off + "] [" + blue + bold + thisFile +
+			off + ":" + yellow + strconv.Itoa(line-2) + off + `] "test <string>:67 log" {` +
 			propkey + "age" + off + ":37;" + propkey + "hash" + off + `:"#$%%@";` + propkey +
 			"issues" + off + `:"";` + propkey + "male" + off + ":true;" + propkey + "name" +
 			off + ":Alice;" + propkey + "skills" + off + `:"map[coding:7]";}`
@@ -234,8 +240,13 @@ var _ = Describe("Default", func() {
 					func(level Level) {
 						mf.EXPECT().Verify(gomock.Any()).
 							DoAndReturn(func(entry *Entry) (bool, error) {
+								// Quite a deep stack through reflect, gomock and filter_mock.
+								_, _, line, _ := runtime.Caller(12)
 								Expect(entry.Level).To(Equal(level))
 								Expect(entry.Message).To(Equal(testMessage + anotherTestMessage))
+								Expect(entry.CallContext.File).To(Equal(thisFile))
+								Expect(entry.CallContext.Package).To(Equal(thisPackage))
+								Expect(entry.CallContext.Line).To(Equal(line))
 								return false, nil
 							})
 						Log(level, testMessage, anotherTestMessage)
@@ -254,8 +265,13 @@ var _ = Describe("Default", func() {
 					func(level Level, testedFunction func(...interface{})) {
 						mf.EXPECT().Verify(gomock.Any()).
 							DoAndReturn(func(entry *Entry) (bool, error) {
+								// Quite a deep stack through reflect, gomock and filter_mock.
+								_, _, line, _ := runtime.Caller(13)
 								Expect(entry.Level).To(Equal(level))
 								Expect(entry.Message).To(Equal(testMessage + anotherTestMessage))
+								Expect(entry.CallContext.File).To(Equal(thisFile))
+								Expect(entry.CallContext.Package).To(Equal(thisPackage))
+								Expect(entry.CallContext.Line).To(Equal(line))
 								return false, nil
 							})
 						testedFunction(testMessage, anotherTestMessage)
@@ -276,8 +292,13 @@ var _ = Describe("Default", func() {
 					func(level Level) {
 						mf.EXPECT().Verify(gomock.Any()).
 							DoAndReturn(func(entry *Entry) (bool, error) {
+								// Quite a deep stack through reflect, gomock and filter_mock.
+								_, _, line, _ := runtime.Caller(12)
 								Expect(entry.Level).To(Equal(level))
 								Expect(entry.Message).To(Equal(expectedMessage))
+								Expect(entry.CallContext.File).To(Equal(thisFile))
+								Expect(entry.CallContext.Package).To(Equal(thisPackage))
+								Expect(entry.CallContext.Line).To(Equal(line))
 								return false, nil
 							})
 						Logf(level, format, testMessage, anotherTestMessage)
@@ -296,8 +317,13 @@ var _ = Describe("Default", func() {
 					func(level Level, testedFunction func(string, ...interface{})) {
 						mf.EXPECT().Verify(gomock.Any()).
 							DoAndReturn(func(entry *Entry) (bool, error) {
+								// Quite a deep stack through reflect, gomock and filter_mock.
+								_, _, line, _ := runtime.Caller(13)
 								Expect(entry.Level).To(Equal(level))
 								Expect(entry.Message).To(Equal(expectedMessage))
+								Expect(entry.CallContext.File).To(Equal(thisFile))
+								Expect(entry.CallContext.Package).To(Equal(thisPackage))
+								Expect(entry.CallContext.Line).To(Equal(line))
 								return false, nil
 							})
 						testedFunction(format, testMessage, anotherTestMessage)
@@ -341,6 +367,13 @@ var _ = Describe("Default", func() {
 				entry := WithError(errorValue)
 				Expect(entry.Properties).To(HaveLen(1))
 				Expect(entry.Properties).To(HaveKeyWithValue(ErrorProperty, errorValue.Error()))
+			})
+		})
+		Describe("IncDepth", func() {
+			const dep = 67
+			It("should create entry with increased depth of call stack", func() {
+				entry := IncDepth(dep)
+				Expect(entry.depth).To(Equal(dep))
 			})
 		})
 	})

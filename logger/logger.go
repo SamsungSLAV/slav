@@ -127,92 +127,92 @@ func (l *Logger) process(entry *Entry) {
 
 // Log builds log message and logs entry.
 func (l *Logger) Log(level Level, args ...interface{}) {
-	l.newEntry().Log(level, args...)
+	l.newEntry().IncDepth(1).Log(level, args...)
 }
 
 // Logf builds formatted log message and logs entry.
 func (l *Logger) Logf(level Level, format string, args ...interface{}) {
-	l.newEntry().Logf(level, format, args...)
+	l.newEntry().IncDepth(1).Logf(level, format, args...)
 }
 
 // Emergency logs emergency level message.
 func (l *Logger) Emergency(args ...interface{}) {
-	l.newEntry().Emergency(args...)
+	l.newEntry().IncDepth(1).Emergency(args...)
 }
 
 // Alert logs alert level message.
 func (l *Logger) Alert(args ...interface{}) {
-	l.newEntry().Alert(args...)
+	l.newEntry().IncDepth(1).Alert(args...)
 }
 
 // Critical logs critical level message.
 func (l *Logger) Critical(args ...interface{}) {
-	l.newEntry().Critical(args...)
+	l.newEntry().IncDepth(1).Critical(args...)
 }
 
 // Error logs error level message.
 func (l *Logger) Error(args ...interface{}) {
-	l.newEntry().Error(args...)
+	l.newEntry().IncDepth(1).Error(args...)
 }
 
 // Warning logs warning level message.
 func (l *Logger) Warning(args ...interface{}) {
-	l.newEntry().Warning(args...)
+	l.newEntry().IncDepth(1).Warning(args...)
 }
 
 // Notice logs notice level message.
 func (l *Logger) Notice(args ...interface{}) {
-	l.newEntry().Notice(args...)
+	l.newEntry().IncDepth(1).Notice(args...)
 }
 
 // Info logs info level message.
 func (l *Logger) Info(args ...interface{}) {
-	l.newEntry().Info(args...)
+	l.newEntry().IncDepth(1).Info(args...)
 }
 
 // Debug logs debug level message.
 func (l *Logger) Debug(args ...interface{}) {
-	l.newEntry().Debug(args...)
+	l.newEntry().IncDepth(1).Debug(args...)
 }
 
 // Emergencyf logs emergency level formatted message.
 func (l *Logger) Emergencyf(format string, args ...interface{}) {
-	l.newEntry().Emergencyf(format, args...)
+	l.newEntry().IncDepth(1).Emergencyf(format, args...)
 }
 
 // Alertf logs alert level formatted message.
 func (l *Logger) Alertf(format string, args ...interface{}) {
-	l.newEntry().Alertf(format, args...)
+	l.newEntry().IncDepth(1).Alertf(format, args...)
 }
 
 // Criticalf logs critical level formatted message.
 func (l *Logger) Criticalf(format string, args ...interface{}) {
-	l.newEntry().Criticalf(format, args...)
+	l.newEntry().IncDepth(1).Criticalf(format, args...)
 }
 
 // Errorf logs error level formatted message.
 func (l *Logger) Errorf(format string, args ...interface{}) {
-	l.newEntry().Errorf(format, args...)
+	l.newEntry().IncDepth(1).Errorf(format, args...)
 }
 
 // Warningf logs warning level formatted message.
 func (l *Logger) Warningf(format string, args ...interface{}) {
-	l.newEntry().Warningf(format, args...)
+	l.newEntry().IncDepth(1).Warningf(format, args...)
 }
 
 // Noticef logs notice level formatted message.
 func (l *Logger) Noticef(format string, args ...interface{}) {
-	l.newEntry().Noticef(format, args...)
+	l.newEntry().IncDepth(1).Noticef(format, args...)
 }
 
 // Infof logs info level formatted message.
 func (l *Logger) Infof(format string, args ...interface{}) {
-	l.newEntry().Infof(format, args...)
+	l.newEntry().IncDepth(1).Infof(format, args...)
 }
 
 // Debugf logs debug level formatted message.
 func (l *Logger) Debugf(format string, args ...interface{}) {
-	l.newEntry().Debugf(format, args...)
+	l.newEntry().IncDepth(1).Debugf(format, args...)
 }
 
 // WithProperty creates a log message with a single property.
@@ -228,4 +228,9 @@ func (l *Logger) WithProperties(props Properties) *Entry {
 // WithError creates a log message with an error property.
 func (l *Logger) WithError(err error) *Entry {
 	return l.newEntry().WithError(err)
+}
+
+// IncDepth increases depth of an Entry for call stack calculations.
+func (l *Logger) IncDepth(dep int) *Entry {
+	return l.newEntry().IncDepth(dep)
 }

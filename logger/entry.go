@@ -33,19 +33,30 @@ type Entry struct {
 	Properties Properties
 	// Timestamp stores point in time of log message creation.
 	Timestamp time.Time
+	// CallContext stores the source code context of log creation.
+	CallContext *CallContext
+	// depth is a call depth of a stack frame of a caller
+	depth int
+}
+
+// IncDepth increases depth of an Entry for call stack frame calculation.
+func (e *Entry) IncDepth(dep int) *Entry {
+	e.depth += dep
+	return e
 }
 
 // Log builds log message and logs entry.
 func (e *Entry) Log(level Level, args ...interface{}) {
-	e.process(level, fmt.Sprint(args...))
+	e.IncDepth(1).process(level, fmt.Sprint(args...))
 }
 
 // Logf builds formatted log message and logs entry.
 func (e *Entry) Logf(level Level, format string, args ...interface{}) {
-	e.process(level, fmt.Sprintf(format, args...))
+	e.IncDepth(1).process(level, fmt.Sprintf(format, args...))
 }
 
 // process verifies if log level is above threshold and logs entry.
+// It acquires timestamp, and source code context.
 func (e *Entry) process(level Level, msg string) {
 	if !e.Logger.PassThreshold(level) {
 		return
@@ -53,88 +64,89 @@ func (e *Entry) process(level Level, msg string) {
 	e.Level = level
 	e.Message = msg
 	e.Timestamp = time.Now()
+	e.CallContext = getCallContext(e.depth + 1)
 
 	e.Logger.process(e)
 }
 
 // Emergency logs emergency level message.
 func (e *Entry) Emergency(args ...interface{}) {
-	e.Log(EmergLevel, args...)
+	e.IncDepth(1).Log(EmergLevel, args...)
 }
 
 // Alert logs alert level message.
 func (e *Entry) Alert(args ...interface{}) {
-	e.Log(AlertLevel, args...)
+	e.IncDepth(1).Log(AlertLevel, args...)
 }
 
 // Critical logs critical level message.
 func (e *Entry) Critical(args ...interface{}) {
-	e.Log(CritLevel, args...)
+	e.IncDepth(1).Log(CritLevel, args...)
 }
 
 // Error logs error level message.
 func (e *Entry) Error(args ...interface{}) {
-	e.Log(ErrLevel, args...)
+	e.IncDepth(1).Log(ErrLevel, args...)
 }
 
 // Warning logs warning level message.
 func (e *Entry) Warning(args ...interface{}) {
-	e.Log(WarningLevel, args...)
+	e.IncDepth(1).Log(WarningLevel, args...)
 }
 
 // Notice logs notice level message.
 func (e *Entry) Notice(args ...interface{}) {
-	e.Log(NoticeLevel, args...)
+	e.IncDepth(1).Log(NoticeLevel, args...)
 }
 
 // Info logs info level message.
 func (e *Entry) Info(args ...interface{}) {
-	e.Log(InfoLevel, args...)
+	e.IncDepth(1).Log(InfoLevel, args...)
 }
 
 // Debug logs debug level message.
 func (e *Entry) Debug(args ...interface{}) {
-	e.Log(DebugLevel, args...)
+	e.IncDepth(1).Log(DebugLevel, args...)
 }
 
 // Emergencyf logs emergency level formatted message.
 func (e *Entry) Emergencyf(format string, args ...interface{}) {
-	e.Logf(EmergLevel, format, args...)
+	e.IncDepth(1).Logf(EmergLevel, format, args...)
 }
 
 // Alertf logs alert level formatted message.
 func (e *Entry) Alertf(format string, args ...interface{}) {
-	e.Logf(AlertLevel, format, args...)
+	e.IncDepth(1).Logf(AlertLevel, format, args...)
 }
 
 // Criticalf logs critical level formatted message.
 func (e *Entry) Criticalf(format string, args ...interface{}) {
-	e.Logf(CritLevel, format, args...)
+	e.IncDepth(1).Logf(CritLevel, format, args...)
 }
 
 // Errorf logs error level formatted message.
 func (e *Entry) Errorf(format string, args ...interface{}) {
-	e.Logf(ErrLevel, format, args...)
+	e.IncDepth(1).Logf(ErrLevel, format, args...)
 }
 
 // Warningf logs warning level formatted message.
 func (e *Entry) Warningf(format string, args ...interface{}) {
-	e.Logf(WarningLevel, format, args...)
+	e.IncDepth(1).Logf(WarningLevel, format, args...)
 }
 
 // Noticef logs notice level formatted message.
 func (e *Entry) Noticef(format string, args ...interface{}) {
-	e.Logf(NoticeLevel, format, args...)
+	e.IncDepth(1).Logf(NoticeLevel, format, args...)
 }
 
 // Infof logs info level formatted message.
 func (e *Entry) Infof(format string, args ...interface{}) {
-	e.Logf(InfoLevel, format, args...)
+	e.IncDepth(1).Logf(InfoLevel, format, args...)
 }
 
 // Debugf logs debug level formatted message.
 func (e *Entry) Debugf(format string, args ...interface{}) {
-	e.Logf(DebugLevel, format, args...)
+	e.IncDepth(1).Logf(DebugLevel, format, args...)
 }
 
 // WithProperty adds a single property to the log message.

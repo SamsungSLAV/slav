@@ -18,6 +18,7 @@ package logger
 
 import (
 	"errors"
+	"runtime"
 
 	gomock "github.com/golang/mock/gomock"
 	. "github.com/onsi/ginkgo"
@@ -33,6 +34,8 @@ var _ = Describe("Logger", func() {
 		anotherTestMessage = string("Another Test Message")
 		format             = string("%s >>> %s")
 		expectedMessage    = string(testMessage + " >>> " + anotherTestMessage)
+		thisFile           = string("logger_test.go")
+		thisPackage        = string("git.tizen.org/tools/slav/logger")
 	)
 	var (
 		ctrl    *gomock.Controller
@@ -266,8 +269,13 @@ var _ = Describe("Logger", func() {
 			T.DescribeTable("should properly build log message and pass to logger's backend",
 				func(level Level) {
 					mf.EXPECT().Verify(gomock.Any()).DoAndReturn(func(entry *Entry) (bool, error) {
+						// Quite a deep stack through reflect, gomock and filter_mock.
+						_, _, line, _ := runtime.Caller(12)
 						Expect(entry.Level).To(Equal(level))
 						Expect(entry.Message).To(Equal(testMessage + anotherTestMessage))
+						Expect(entry.CallContext.File).To(Equal(thisFile))
+						Expect(entry.CallContext.Package).To(Equal(thisPackage))
+						Expect(entry.CallContext.Line).To(Equal(line))
 						return false, nil
 					})
 					L.Log(level, testMessage, anotherTestMessage)
@@ -285,8 +293,13 @@ var _ = Describe("Logger", func() {
 				" to logger's backend",
 				func(level Level, testedFunction func(*Logger, ...interface{})) {
 					mf.EXPECT().Verify(gomock.Any()).DoAndReturn(func(entry *Entry) (bool, error) {
+						// Quite a deep stack through reflect, gomock and filter_mock.
+						_, _, line, _ := runtime.Caller(13)
 						Expect(entry.Level).To(Equal(level))
 						Expect(entry.Message).To(Equal(testMessage + anotherTestMessage))
+						Expect(entry.CallContext.File).To(Equal(thisFile))
+						Expect(entry.CallContext.Package).To(Equal(thisPackage))
+						Expect(entry.CallContext.Line).To(Equal(line))
 						return false, nil
 					})
 					testedFunction(L, testMessage, anotherTestMessage)
@@ -305,8 +318,13 @@ var _ = Describe("Logger", func() {
 			T.DescribeTable("should properly build log message and pass to logger's backend",
 				func(level Level) {
 					mf.EXPECT().Verify(gomock.Any()).DoAndReturn(func(entry *Entry) (bool, error) {
+						// Quite a deep stack through reflect, gomock and filter_mock.
+						_, _, line, _ := runtime.Caller(12)
 						Expect(entry.Level).To(Equal(level))
 						Expect(entry.Message).To(Equal(expectedMessage))
+						Expect(entry.CallContext.File).To(Equal(thisFile))
+						Expect(entry.CallContext.Package).To(Equal(thisPackage))
+						Expect(entry.CallContext.Line).To(Equal(line))
 						return false, nil
 					})
 					L.Logf(level, format, testMessage, anotherTestMessage)
@@ -324,8 +342,13 @@ var _ = Describe("Logger", func() {
 				" to logger's backend",
 				func(level Level, testedFunction func(*Logger, string, ...interface{})) {
 					mf.EXPECT().Verify(gomock.Any()).DoAndReturn(func(entry *Entry) (bool, error) {
+						// Quite a deep stack through reflect, gomock and filter_mock.
+						_, _, line, _ := runtime.Caller(13)
 						Expect(entry.Level).To(Equal(level))
 						Expect(entry.Message).To(Equal(expectedMessage))
+						Expect(entry.CallContext.File).To(Equal(thisFile))
+						Expect(entry.CallContext.Package).To(Equal(thisPackage))
+						Expect(entry.CallContext.Line).To(Equal(line))
 						return false, nil
 					})
 					testedFunction(L, format, testMessage, anotherTestMessage)
@@ -369,6 +392,13 @@ var _ = Describe("Logger", func() {
 			entry := L.WithError(errorValue)
 			Expect(entry.Properties).To(HaveLen(1))
 			Expect(entry.Properties).To(HaveKeyWithValue(ErrorProperty, errorValue.Error()))
+		})
+	})
+	Describe("IncDepth", func() {
+		const dep = 67
+		It("should create entry with increased depth of call stack", func() {
+			entry := L.IncDepth(dep)
+			Expect(entry.depth).To(Equal(dep))
 		})
 	})
 })

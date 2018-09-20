@@ -54,6 +54,22 @@ const (
 	QuoteModeAll
 )
 
+// CallContextMode defines possible modes of printing call source code context.
+type CallContextMode uint8
+
+const (
+	// CallContextModeNone - no context is used.
+	CallContextModeNone CallContextMode = iota
+	// CallContextModeCompact - file name and line number are used.
+	CallContextModeCompact
+	// CallContextModeFunction - file name, line number and function name are used.
+	CallContextModeFunction
+	// CallContextModeFile - full file path and line number are used.
+	CallContextModeFile
+	// CallContextModePackage - package name, line number and function are used.
+	CallContextModePackage
+)
+
 // Define default SerializerText properties.
 const (
 	// DefaultSerializerTextTimeFormat is the default date and time format.
@@ -62,6 +78,8 @@ const (
 	DefaultTimestampMode = TimestampModeDiff
 	// DefaultQuoteMode is the default quoting mode.
 	DefaultQuoteMode = QuoteModeSpecialAndEmpty
+	// DefaultCallContextMode is the default context mode.
+	DefaultCallContextMode = CallContextModeCompact
 )
 
 // Define termninal codes for colors.
@@ -77,7 +95,10 @@ const (
 	invert = "\x1b[7m"
 	off    = "\x1b[0m"
 
-	propkey = cyan
+	propkey  = cyan
+	path     = blue + bold
+	function = green
+	line     = yellow
 )
 
 // levelColoring stores mapping between logger levels and their colors.
@@ -108,6 +129,9 @@ type SerializerText struct {
 	// QuoteMode defines which values are quoted.
 	QuoteMode QuoteMode
 
+	// CallContextMode defines way of serializing source code context.
+	CallContextMode CallContextMode
+
 	// UseColors set to true enables usage of colors.
 	UseColors bool
 
@@ -124,11 +148,12 @@ type SerializerText struct {
 // NewSerializerText creates and returns a new default SerializerText with default values.
 func NewSerializerText() *SerializerText {
 	return &SerializerText{
-		TimestampMode: DefaultTimestampMode,
-		TimeFormat:    DefaultSerializerTextTimeFormat,
-		UseColors:     true,
-		QuoteMode:     DefaultQuoteMode,
-		baseTime:      time.Now(),
+		TimestampMode:   DefaultTimestampMode,
+		TimeFormat:      DefaultSerializerTextTimeFormat,
+		UseColors:       true,
+		QuoteMode:       DefaultQuoteMode,
+		CallContextMode: DefaultCallContextMode,
+		baseTime:        time.Now(),
 	}
 }
 
@@ -142,6 +167,9 @@ func (s *SerializerText) setDefaultsOnInvalid() {
 	}
 	if s.QuoteMode > QuoteModeAll {
 		s.QuoteMode = DefaultQuoteMode
+	}
+	if s.CallContextMode > CallContextModePackage {
+		s.CallContextMode = DefaultCallContextMode
 	}
 	if s.baseTime.IsZero() {
 		s.baseTime = time.Now()
@@ -218,6 +246,45 @@ func (s *SerializerText) appendLevel(buf io.Writer, level Level) (err error) {
 	return err
 }
 
+// appendCallContext to log message being created in buf.
+func (s *SerializerText) appendCallContext(buf io.Writer, ctx *CallContext) (err error) {
+	if ctx == nil || s.CallContextMode == CallContextModeNone {
+		return nil
+	}
+	var fPath, fEnd, fFunc string
+	if s.UseColors {
+		fPath = "[" + path
+		fEnd = off + ":" + line + "%d" + off + "] "
+		fFunc = off + ":" + function
+	} else {
+		fPath = "["
+		fEnd = ":%d] "
+		fFunc = ":"
+	}
+	switch s.CallContextMode {
+	case CallContextModeCompact:
+		_, err = fmt.Fprintf(buf, fPath+"%s"+fEnd, ctx.File, ctx.Line)
+	case CallContextModeFunction:
+		if len(ctx.Type) > 0 {
+			_, err = fmt.Fprintf(buf, fPath+"%s"+fFunc+"%s.%s"+fEnd, ctx.File, ctx.Type,
+				ctx.Function, ctx.Line)
+		} else {
+			_, err = fmt.Fprintf(buf, fPath+"%s"+fFunc+"%s"+fEnd, ctx.File, ctx.Function, ctx.Line)
+		}
+	case CallContextModeFile:
+		_, err = fmt.Fprintf(buf, fPath+"%s%s"+fEnd, ctx.Path, ctx.File, ctx.Line)
+	case CallContextModePackage:
+		if len(ctx.Type) > 0 {
+			_, err = fmt.Fprintf(buf, fPath+"%s"+fFunc+"%s.%s"+fEnd, ctx.Package, ctx.Type,
+				ctx.Function, ctx.Line)
+		} else {
+			_, err = fmt.Fprintf(buf, fPath+"%s"+fFunc+"%s"+fEnd, ctx.Package, ctx.Function,
+				ctx.Line)
+		}
+	}
+	return err
+}
+
 // appendMessage to log message being created in buf.
 func (s *SerializerText) appendMessage(buf io.Writer, msg string) (err error) {
 	format := s.quotingFormat(msg) + " "
@@ -275,6 +342,10 @@ func (s *SerializerText) serialize(entry *Entry, buf io.Writer) error {
 		return err
 	}
 	err = s.appendLevel(buf, entry.Level)
+	if err != nil {
+		return err
+	}
+	err = s.appendCallContext(buf, entry.CallContext)
 	if err != nil {
 		return err
 	}

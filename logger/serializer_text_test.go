@@ -76,6 +76,7 @@ var _ = Describe("SerializerText", func() {
 			Expect(s.TimeFormat).To(Equal(DefaultSerializerTextTimeFormat))
 			Expect(s.UseColors).To(BeTrue())
 			Expect(s.QuoteMode).To(Equal(DefaultQuoteMode))
+			Expect(s.CallContextMode).To(Equal(DefaultCallContextMode))
 			Expect(s.baseTime).To(BeTemporally(">", before))
 			Expect(s.baseTime).To(BeTemporally("<", time.Now()))
 			Expect(s.ascii).To(HaveLen(asciiTableSize))
@@ -113,6 +114,13 @@ var _ = Describe("SerializerText", func() {
 			s.setDefaultsOnInvalid()
 
 			Expect(s.QuoteMode).To(Equal(DefaultQuoteMode))
+		})
+		It("should set call context mode to default value if out of range", func() {
+			s = &SerializerText{}
+			s.CallContextMode = 0xBB
+			s.setDefaultsOnInvalid()
+
+			Expect(s.CallContextMode).To(Equal(DefaultCallContextMode))
 		})
 		It("should set base time to now if not set before", func() {
 			s = &SerializerText{}
@@ -154,6 +162,20 @@ var _ = Describe("SerializerText", func() {
 			T.Entry("QuoteModeSpecial", QuoteModeSpecial),
 			T.Entry("QuoteModeSpecialAndEmpty", QuoteModeSpecialAndEmpty),
 			T.Entry("QuoteModeAll", QuoteModeAll),
+		)
+		T.DescribeTable("should not change call context mode if valid",
+			func(mode CallContextMode) {
+				s = &SerializerText{}
+				s.CallContextMode = mode
+				s.setDefaultsOnInvalid()
+
+				Expect(s.CallContextMode).To(Equal(mode))
+			},
+			T.Entry("CallContextModeNone", CallContextModeNone),
+			T.Entry("CallContextModeCompact", CallContextModeCompact),
+			T.Entry("CallContextModeFunction", CallContextModeFunction),
+			T.Entry("CallContextModeFile", CallContextModeFile),
+			T.Entry("CallContextModePackage", CallContextModePackage),
 		)
 		It("should not change base time if set", func() {
 			magicTime := time.Unix(1234567890, 0)
@@ -317,6 +339,99 @@ var _ = Describe("SerializerText", func() {
 				T.Entry("WithoutColors", false),
 			)
 		})
+		Describe("appendCallContext", func() {
+			var withType, withoutType CallContext
+			BeforeEach(func() {
+				withType = CallContext{
+					Path:     "p",
+					File:     "f",
+					Line:     98765,
+					Package:  "a",
+					Type:     "t",
+					Function: "u",
+				}
+				withoutType = withType
+				withoutType.Type = ""
+			})
+
+			T.DescribeTable("should serialize context without colors",
+				func(mode CallContextMode, ctx *CallContext, expected string) {
+					s.UseColors = false
+					s.CallContextMode = mode
+					err := s.appendCallContext(buf, ctx)
+
+					Expect(err).NotTo(HaveOccurred())
+					Expect(buf.String()).To(Equal(expected))
+				},
+				T.Entry("None nil", CallContextModeNone, nil, ""),
+				T.Entry("None withType", CallContextModeNone, &withType, ""),
+				T.Entry("None withoutType", CallContextModeNone, &withoutType, ""),
+				T.Entry("Compact nil", CallContextModeCompact, nil, ""),
+				T.Entry("Compact withType", CallContextModeCompact, &withType, "[f:98765] "),
+				T.Entry("Compact withoutType", CallContextModeCompact, &withoutType, "[f:98765] "),
+				T.Entry("Function nil", CallContextModeFunction, nil, ""),
+				T.Entry("Function withType", CallContextModeFunction, &withType, "[f:t.u:98765] "),
+				T.Entry("Function withoutType", CallContextModeFunction, &withoutType,
+					"[f:u:98765] "),
+				T.Entry("File nil", CallContextModeFile, nil, ""),
+				T.Entry("File withType", CallContextModeFile, &withType, "[pf:98765] "),
+				T.Entry("File withoutType", CallContextModeFile, &withoutType, "[pf:98765] "),
+				T.Entry("Package nil", CallContextModePackage, nil, ""),
+				T.Entry("Package withType", CallContextModePackage, &withType, "[a:t.u:98765] "),
+				T.Entry("Package withoutType", CallContextModePackage, &withoutType,
+					"[a:u:98765] "),
+			)
+			T.DescribeTable("should serialize context with colors",
+				func(mode CallContextMode, ctx *CallContext, expected string) {
+					s.UseColors = true
+					s.CallContextMode = mode
+					err := s.appendCallContext(buf, ctx)
+
+					Expect(err).NotTo(HaveOccurred())
+					Expect(buf.String()).To(Equal(expected))
+				},
+				T.Entry("None nil", CallContextModeNone, nil, ""),
+				T.Entry("None withType", CallContextModeNone, &withType, ""),
+				T.Entry("None withoutType", CallContextModeNone, &withoutType, ""),
+				T.Entry("Compact nil", CallContextModeCompact, nil, ""),
+				T.Entry("Compact withType", CallContextModeCompact, &withType,
+					"["+blue+bold+"f"+off+":"+yellow+"98765"+off+"] "),
+				T.Entry("Compact withoutType", CallContextModeCompact, &withoutType,
+					"["+blue+bold+"f"+off+":"+yellow+"98765"+off+"] "),
+				T.Entry("Function nil", CallContextModeFunction, nil, ""),
+				T.Entry("Function withType", CallContextModeFunction, &withType,
+					"["+blue+bold+"f"+off+":"+green+"t.u"+off+":"+yellow+"98765"+off+"] "),
+				T.Entry("Function withoutType", CallContextModeFunction, &withoutType,
+					"["+blue+bold+"f"+off+":"+green+"u"+off+":"+yellow+"98765"+off+"] "),
+				T.Entry("File nil", CallContextModeFile, nil, ""),
+				T.Entry("File withType", CallContextModeFile, &withType,
+					"["+blue+bold+"pf"+off+":"+yellow+"98765"+off+"] "),
+				T.Entry("File withoutType", CallContextModeFile, &withoutType,
+					"["+blue+bold+"pf"+off+":"+yellow+"98765"+off+"] "),
+				T.Entry("Package nil", CallContextModePackage, nil, ""),
+				T.Entry("Package withType", CallContextModePackage, &withType,
+					"["+blue+bold+"a"+off+":"+green+"t.u"+off+":"+yellow+"98765"+off+"] "),
+				T.Entry("Package withoutType", CallContextModePackage, &withoutType,
+					"["+blue+bold+"a"+off+":"+green+"u"+off+":"+yellow+"98765"+off+"] "),
+			)
+			T.DescribeTable("should return error if writing fails",
+				func(mode CallContextMode, ctx *CallContext) {
+					s.UseColors = false
+					s.CallContextMode = mode
+					w := NewFailingWriter(0, testError)
+					err := s.appendCallContext(w, ctx)
+					Expect(err).To(Equal(testError))
+				},
+				T.Entry("Compact withType", CallContextModeCompact, &withType),
+				T.Entry("Compact withoutType", CallContextModeCompact, &withoutType),
+				T.Entry("Function withType", CallContextModeFunction, &withType),
+				T.Entry("Function withoutType", CallContextModeFunction, &withoutType),
+				T.Entry("File withType", CallContextModeFile, &withType),
+				T.Entry("File withoutType", CallContextModeFile, &withoutType),
+				T.Entry("Package withType", CallContextModePackage, &withType),
+				T.Entry("Package withoutType", CallContextModePackage, &withoutType),
+			)
+		})
 		Describe("appendMessage", func() {
 			T.DescribeTable("should serialize properly quoted message",
 				func(msg string, expected string) {
@@ -325,10 +440,10 @@ var _ = Describe("SerializerText", func() {
 					Expect(buf.String()).To(Equal(expected))
 				},
 
-				T.Entry("empty", empty, "\"\" "),
+				T.Entry("empty", empty, `"" `),
 				T.Entry("nospecial", nospecial, nospecial+" "),
-				T.Entry("special", special, "\""+special+"\" "),
-				T.Entry("mixed", mixed, "\""+mixed+"\" "),
+				T.Entry("special", special, `"`+special+`" `),
+				T.Entry("mixed", mixed, `"`+mixed+`" `),
 			)
 			It("should return error if writing fails", func() {
 				w := NewFailingWriter(0, testError)
@@ -379,9 +494,9 @@ var _ = Describe("SerializerText", func() {
 
 				Expect(err).NotTo(HaveOccurred())
 				expected := "{" + propkey + "age" + off + ":37;" + propkey + "hash" + off +
-					":\"#$%%@\";" + propkey + "issues" + off + ":\"\";" + propkey + "male" + off +
+					`:"#$%%@";` + propkey + "issues" + off + `:"";` + propkey + "male" + off +
 					":true;" + propkey + "name" + off + ":Alice;" + propkey + "skills" + off +
-					":\"map[coding:7]\";}"
+					`:"map[coding:7]";}`
 				Expect(buf.String()).To(Equal(expected))
 			})
 			T.DescribeTable("should return error if writing fails",
@@ -415,6 +530,14 @@ var _ = Describe("SerializerText", func() {
 					Level:     ErrLevel,
 					Message:   "message",
 					Timestamp: s.baseTime.Add(time.Duration(11) * time.Minute),
+					CallContext: &CallContext{
+						Path:     "p",
+						File:     "f",
+						Line:     98765,
+						Package:  "a",
+						Type:     "t",
+						Function: "u",
+					},
 					Properties: Properties{
 						"name": "Alice",
 						"hash": "#$%%@",
@@ -425,14 +548,15 @@ var _ = Describe("SerializerText", func() {
 				Expect(err).To(Equal(testError))
 			},
 			// expected serialized properties string:
-			// [660.000000] [ERR] message {hash:"#$%%@";male:true;name:Alice;}
-			// 0        1         2         3         4         5         6
-			// 123456789012345678901234567890123456789012345678901234567890123
-			//       *        *       *                  *
+			// [660.000000] [ERR] [f:98765] message {hash:"#$%%@";male:true;name:Alice;}
+			// 0        1         2         3         4         5         6         7
+			// 1234567890123456789012345678901234567890123456789012345678901234567890123
+			//       *        *       *        *                    *
 			T.Entry("Timestamp", 7),
 			T.Entry("Level", 16),
-			T.Entry("Message", 24),
-			T.Entry("Properties", 43),
+			T.Entry("Context", 24),
+			T.Entry("Message", 33),
+			T.Entry("Properties", 54),
 		)
 		It("should fail if Entry is invalid", func() {
 			w := NewFailingWriter(0, testError)
@@ -447,6 +571,14 @@ var _ = Describe("SerializerText", func() {
 				Level:     ErrLevel,
 				Message:   "message",
 				Timestamp: s.baseTime.Add(time.Duration(11) * time.Minute),
+				CallContext: &CallContext{
+					Path:     "p",
+					File:     "f",
+					Line:     98765,
+					Package:  "a",
+					Type:     "t",
+					Function: "u",
+				},
 				Properties: Properties{
 					"name": "Alice",
 					"hash": "#$%%@",
@@ -455,9 +587,10 @@ var _ = Describe("SerializerText", func() {
 			}
 			byt, err := s.Serialize(entry)
 			Expect(err).NotTo(HaveOccurred())
-			expected := "[660.000000] [" + red + bold + "ERR" + off + "] message {" + propkey +
-				"hash" + off + ":\"#$%%@\";" + propkey + "male" + off + ":true;" + propkey +
-				"name" + off + ":Alice;}"
+			expected := "[660.000000] [" + red + bold + "ERR" + off + "] [" + blue + bold + "f" +
+				off + ":" + yellow + "98765" + off + "] message {" + propkey + "hash" + off +
+				`:"#$%%@";` + propkey + "male" + off + ":true;" + propkey + "name" + off +
+				":Alice;}"
 			Expect(string(byt)).To(Equal(expected))
 		})
 		It("should fail if Entry is invalid", func() {

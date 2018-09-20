@@ -27,10 +27,11 @@ const (
 )
 
 type serializerJSONRecord struct {
-	Level      string     `json:"level"`
-	Message    string     `json:"message"`
-	Timestamp  string     `json:"timestamp"`
-	Properties Properties `json:"properties,omitempty"`
+	Level       string       `json:"level"`
+	Message     string       `json:"message"`
+	Timestamp   string       `json:"timestamp"`
+	CallContext *CallContext `json:"callcontext,omitempty"`
+	Properties  Properties   `json:"properties,omitempty"`
 }
 
 // SerializerJSON serializes entry to JSON format.
@@ -54,10 +55,11 @@ func (s *SerializerJSON) Serialize(entry *Entry) ([]byte, error) {
 		format = DefaultSerializerJSONTimestampFormat
 	}
 	record := serializerJSONRecord{
-		Level:      entry.Level.String(),
-		Message:    entry.Message,
-		Timestamp:  entry.Timestamp.UTC().Format(format),
-		Properties: entry.Properties,
+		Level:       entry.Level.String(),
+		Message:     entry.Message,
+		Timestamp:   entry.Timestamp.UTC().Format(format),
+		CallContext: entry.CallContext,
+		Properties:  entry.Properties,
 	}
 	return json.Marshal(record)
 }

@@ -36,6 +36,14 @@ var _ = Describe("SerializerJSON", func() {
 			Level:     ErrLevel,
 			Message:   "message",
 			Timestamp: time.Unix(1234567890, 0),
+			CallContext: &CallContext{
+				Path:     "somePath",
+				File:     "someFile",
+				Line:     1234567,
+				Package:  "somePackage",
+				Type:     "someType",
+				Function: "someFunction",
+			},
 		}
 		s = NewSerializerJSON()
 	})
@@ -50,7 +58,9 @@ var _ = Describe("SerializerJSON", func() {
 			buf, err := s.Serialize(e)
 			Expect(err).NotTo(HaveOccurred())
 			expected := []byte(`{"level":"error","message":"message","timestamp":` +
-				`"2009-02-13T23:31:30Z"}`)
+				`"2009-02-13T23:31:30Z","callcontext":{"path":"somePath","file":"someFile",` +
+				`"line":1234567,"package":"somePackage","type":"someType","function":` +
+				`"someFunction"}}`)
 			Expect(buf).To(Equal(expected))
 		})
 		It("should serialize message with properties", func() {
@@ -67,8 +77,10 @@ var _ = Describe("SerializerJSON", func() {
 			buf, err := s.Serialize(e)
 			Expect(err).NotTo(HaveOccurred())
 			expected := []byte(`{"level":"error","message":"message","timestamp":` +
-				`"2009-02-13T23:31:30Z","properties":{"age":37,"issues":"","male":true,"name":` +
-				`"Alice","skills":{"coding":7,"cooking":"expert"}}}`)
+				`"2009-02-13T23:31:30Z","callcontext":{"path":"somePath","file":"someFile",` +
+				`"line":1234567,"package":"somePackage","type":"someType","function":` +
+				`"someFunction"},"properties":{"age":37,"issues":"","male":true,"name":"Alice",` +
+				`"skills":{"coding":7,"cooking":"expert"}}}`)
 			Expect(buf).To(Equal(expected))
 		})
 		It("should serialize message with error", func() {
@@ -77,7 +89,9 @@ var _ = Describe("SerializerJSON", func() {
 			buf, err := s.Serialize(e)
 			Expect(err).NotTo(HaveOccurred())
 			expected := []byte(`{"level":"error","message":"message","timestamp":` +
-				`"2009-02-13T23:31:30Z","properties":{"error":"test error"}}`)
+				`"2009-02-13T23:31:30Z","callcontext":{"path":"somePath","file":` +
+				`"someFile","line":1234567,"package":"somePackage","type":"someType",` +
+				`"function":"someFunction"},"properties":{"error":"test error"}}`)
 			Expect(buf).To(Equal(expected))
 		})
 		It("should return error if serialization is not possible", func() {
@@ -93,7 +107,9 @@ var _ = Describe("SerializerJSON", func() {
 			buf, err := s.Serialize(e)
 			Expect(err).NotTo(HaveOccurred())
 			expected := []byte(`{"level":"error","message":"message","timestamp":` +
-				`"2009-02-13T23:31:30Z"}`)
+				`"2009-02-13T23:31:30Z","callcontext":{"path":"somePath","file":"someFile",` +
+				`"line":1234567,"package":"somePackage","type":"someType","function":` +
+				`"someFunction"}}`)
 			Expect(buf).To(Equal(expected))
 		})
 		It("should serialize with different timestamp format", func() {
@@ -101,7 +117,26 @@ var _ = Describe("SerializerJSON", func() {
 			buf, err := s.Serialize(e)
 			Expect(err).NotTo(HaveOccurred())
 			expected := []byte(`{"level":"error","message":"message","timestamp":` +
-				`"Fri Feb 13 23:31:30 2009"}`)
+				`"Fri Feb 13 23:31:30 2009","callcontext":{"path":"somePath","file":"someFile",` +
+				`"line":1234567,"package":"somePackage","type":"someType","function":` +
+				`"someFunction"}}`)
+			Expect(buf).To(Equal(expected))
+		})
+		It("should serialize if context's type is missing", func() {
+			e.CallContext.Type = ""
+			buf, err := s.Serialize(e)
+			Expect(err).NotTo(HaveOccurred())
+			expected := []byte(`{"level":"error","message":"message","timestamp":` +
+				`"2009-02-13T23:31:30Z","callcontext":{"path":"somePath","file":"someFile",` +
+				`"line":1234567,"package":"somePackage","function":"someFunction"}}`)
+			Expect(buf).To(Equal(expected))
+		})
+		It("should serialize if there is no context at all", func() {
+			e.CallContext = nil
+			buf, err := s.Serialize(e)
+			Expect(err).NotTo(HaveOccurred())
+			expected := []byte(`{"level":"error","message":"message","timestamp":` +
+				`"2009-02-13T23:31:30Z"}`)
 			Expect(buf).To(Equal(expected))
 		})
 	})
