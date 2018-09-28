@@ -1,0 +1,41 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure("2") do |config|
+  config.vm.box = "debian/stretch64"
+
+  config.vm.provider :libvirt do |libvirt|
+    libvirt.nested = true
+  end
+
+  config.vm.provision :libvirt, type: :shell, inline: <<-SHELL
+    export DEBIAN_FRONTEND=noninteractive
+    apt-get update
+    apt-get install --assume-yes --quiet qemu libvirt-bin ebtables dnsmasq
+    usermod --append --groups libvirt vagrant
+  SHELL
+
+  config.vm.provision :vagrant, type: :shell, inline: <<-SHELL
+    wget --no-verbose https://releases.hashicorp.com/vagrant/2.1.5/vagrant_2.1.5_x86_64.deb
+    dpkg -i vagrant_2.1.5_x86_64.deb
+  SHELL
+
+  config.vm.provision :vagrant_libvirt_deps, type: :shell, inline: <<-SHELL
+    echo 'deb-src http://httpredir.debian.org/debian stretch main' >> /etc/apt/sources.list
+    export DEBIAN_FRONTEND=noninteractive
+    apt-get update
+    apt-get build-dep --assume-yes --quiet vagrant ruby-libvirt
+    apt-get install --assume-yes --quiet libxslt-dev libxml2-dev libvirt-dev zlib1g-dev ruby-dev
+  SHELL
+
+  config.vm.provision :vagrant_libvirt_plugin, type: :shell, privileged: false, inline: <<-SHELL
+    vagrant plugin install vagrant-libvirt
+  SHELL
+
+  config.vm.provision :nested, type: :shell, privileged: false, inline: <<-SHELL
+    mkdir -p /home/vagrant/va_nested
+    cd $_
+    vagrant init --minimal debian/stretch64
+    vagrant up --provider libvirt
+  SHELL
+end
