@@ -13,6 +13,40 @@ storage_setup()
     mkdir -m 1777 /var/dut
 }
 
+net_setup()
+{
+    cat > "$UNITDIR/net-tun.service" <<EOF
+[Unit]
+Description=/dev/net/tun for libvirt/qemu
+Before=libvirtd.service
+
+[Service]
+Type=oneshot
+ExecStartPre=-/bin/mkdir -m 0755 /dev/net
+ExecStart=/bin/mknod -m 0666 /dev/net/tun c 10 200
+
+[Install]
+WantedBy=default.target
+EOF
+    UNITS2ENABLE="$UNITS2ENABLE net-tun.service"
+    systemctl start net-tun.service
+
+    virsh net-define --file /dev/stdin <<EOF
+<network>
+  <name>dut-network</name>
+  <bridge name='dut-br0' stp='on' delay='0'/>
+  <domain name='dut-network'/>
+  <ip address='192.168.100.1' netmask='255.255.255.0'>
+    <dhcp>
+      <range start='192.168.100.100' end='192.168.100.100'/>
+    </dhcp>
+  </ip>
+</network>
+EOF
+   virsh net-autostart dut-network
+   virsh net-start dut-network
+}
+
 apt_setup()
 {
     echo 'deb http://archive.ubuntu.com/ubuntu xenial-backports main restricted universe multiverse' > /etc/apt/sources.list.d/dut-s-xenial-backports.list
@@ -103,6 +137,7 @@ slav_setup()
 # dut-s-lxc-setup via following file:
 . /var/tmp/dut-s-setup.env
 
+net_setup
 apt_setup
 storage_setup
 slav_setup
