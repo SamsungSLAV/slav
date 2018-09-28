@@ -13,7 +13,7 @@ Vagrant.configure("2") do |config|
   config.vm.provision :libvirt, type: :shell, inline: <<-SHELL
     export DEBIAN_FRONTEND=noninteractive
     apt-get update
-    apt-get install --assume-yes --quiet qemu libvirt-bin ebtables dnsmasq
+    apt-get install --assume-yes --quiet qemu libvirt-daemon-system libvirt-clients ebtables dnsmasq
     usermod --append --groups libvirt vagrant
   SHELL
 
