@@ -35,9 +35,10 @@ Vagrant.configure("2") do |config|
   SHELL
 
   config.vm.provision :nested, type: :shell, privileged: false, inline: <<-SHELL
-    mkdir -p /home/vagrant/va_nested
-    cd $_
-    vagrant init --minimal debian/stretch64
+    export DUT_DIR='/home/vagrant/va_nested'
+    mkdir -p "$DUT_DIR"
+    cp /vagrant/Vagrantfile_nested "${DUT_DIR}/Vagrantfile"
+    cd "$DUT_DIR"
     vagrant up --provider libvirt
   SHELL
 end

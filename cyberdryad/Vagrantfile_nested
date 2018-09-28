@@ -1,0 +1,13 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure("2") do |config|
+  config.vm.box = "debian/stretch64"
+
+  config.vm.synced_folder ".", "/vagrant", type: "rsync"
+
+  config.vm.provider :libvirt do |libvirt|
+    libvirt.management_network_name = "vagrant-libvirt-nested"
+    libvirt.management_network_address = "192.168.124.0/24"
+  end
+end
