@@ -7,7 +7,19 @@
       - common/ansible_runable
       - common/packages_uptodate
 
-- name: Deploy Boruta
+- name: Build Dryad executables for ARMv7
+  hosts: boruta_srv
+  vars:
+    build_flags_muxpi: GOOS=linux GOARCH=arm GOARM=7
+  roles:
+      - slav/dryad
+
+- name: Build Boruta
   hosts: boruta_srv
   roles:
       - slav/boruta
+
+- name: Build Weles
+  hosts: weles_srv
+  roles:
+      - slav/weles

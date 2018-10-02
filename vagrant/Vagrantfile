@@ -16,11 +16,15 @@ Vagrant.configure("2") do |config|
   config.vm.provision "ansible" do |ansible|
     ansible.playbook = "../ansible/main.yml"
     ansible.groups = {
-      "all_srvs:children" => "boruta_srv",
+      "all_srvs:children" => [ "boruta_srv", "weles_srv" ],
       "boruta_srv" => "default",
       "boruta_srv:vars" => {
-        "gopath" => "~/go"
-      }
+        "gopath" => "${HOME}/go"
+      },
+      "weles_srv" => "default",
+      "weles_srv:vars" => {
+        "gopath" => "${HOME}/go"
+      },
     }
   end
 end
