@@ -1,0 +1,11 @@
+[Unit]
+Description=Weles server
+After=network-online.target
+
+[Service]
+Type=simple
+ExecStart=/usr/local/bin/weles --boruta-address http://{{ boruta_api_addr }} --host {{ weles_api_addr }} --port {{ weles_api_port }} --page-limit {{ weles_page_limit }}
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

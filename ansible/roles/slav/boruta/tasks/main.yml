@@ -21,3 +21,30 @@
   command: /usr/local/go/bin/go get ./...
   args:
     chdir: "{{ hostvars[inventory_hostname].gopath }}/src/github.com/SamsungSLAV/boruta"
+
+- name: Copy Boruta server binary to /usr/local/bin
+  become: yes
+  copy:
+    remote_src: yes
+    src: "{{ hostvars[inventory_hostname].gopath }}/bin/boruta"
+    dest: /usr/local/bin/boruta
+    owner: root
+    group: root
+    mode: '0744'
+
+- name: Add service file for Boruta
+  become: yes
+  template:
+    src: boruta.service.j2
+    dest: /etc/systemd/system/boruta.service
+    owner: root
+    group: root
+    mode: '0644'
+
+- name: Enable and start Boruta server
+  become: yes
+  systemd:
+      daemon_reload: yes
+      enabled: yes
+      state: started
+      name: boruta

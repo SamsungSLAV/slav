@@ -1,0 +1,11 @@
+[Unit]
+Description=Boruta server
+After=network-online.target
+
+[Service]
+Type=simple
+ExecStart=/usr/local/bin/boruta -api-addr {{ boruta_api_addr }} -rpc-addr {{ boruta_rpc_addr }}
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

@@ -14,12 +14,20 @@
   roles:
       - slav/dryad
 
-- name: Build Boruta
+- name: Build and deploy Boruta
   hosts: boruta_srv
+  vars:
+    - boruta_api_addr: "192.168.111.10:8487"
+    - boruta_rpc_addr: "192.168.111.10:7175"
   roles:
       - slav/boruta
 
-- name: Build Weles
+- name: Build and deploy Weles
   hosts: weles_srv
+  vars:
+    - boruta_api_addr: "192.168.111.10:8487"
+    - weles_api_addr: "192.168.111.10"
+    - weles_api_port: "5010"
+    - weles_page_limit: "30"
   roles:
       - slav/weles
