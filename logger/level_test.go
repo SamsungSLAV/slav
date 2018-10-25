@@ -27,15 +27,15 @@ var _ = Describe("Level", func() {
 		func(level Level, expected string) {
 			Expect(level.String()).To(Equal(expected))
 		},
-		T.Entry("EmergLevel", EmergLevel, "emergency"),
-		T.Entry("AlertLevel", AlertLevel, "alert"),
-		T.Entry("CritLevel", CritLevel, "critical"),
-		T.Entry("ErrLevel", ErrLevel, "error"),
-		T.Entry("WarningLevel", WarningLevel, "warning"),
-		T.Entry("NoticeLevel", NoticeLevel, "notice"),
-		T.Entry("InfoLevel", InfoLevel, "info"),
-		T.Entry("DebugLevel", DebugLevel, "debug"),
-		T.Entry("Unknown level", Level(0xBADC0DE), "unknown"),
+		T.Entry("EmergLevel", EmergLevel, EmergLevelStr),
+		T.Entry("AlertLevel", AlertLevel, AlertLevelStr),
+		T.Entry("CritLevel", CritLevel, CritLevelStr),
+		T.Entry("ErrLevel", ErrLevel, ErrLevelStr),
+		T.Entry("WarningLevel", WarningLevel, WarningLevelStr),
+		T.Entry("NoticeLevel", NoticeLevel, NoticeLevelStr),
+		T.Entry("InfoLevel", InfoLevel, InfoLevelStr),
+		T.Entry("DebugLevel", DebugLevel, DebugLevelStr),
+		T.Entry("Unknown level", Level(0xBADC0DE), UnknownLevelStr),
 	)
 	Describe("IsValid", func() {
 		T.DescribeTable("should treat known log level as valid",
@@ -54,6 +54,29 @@ var _ = Describe("Level", func() {
 		It("should treat unknown log level as invalid", func() {
 			badLevel := Level(0xBADC0DE)
 			Expect(badLevel.IsValid()).To(BeFalse())
+		})
+	})
+	Describe("StringToLevel", func() {
+		T.DescribeTable("should return proper log levels",
+			func(input string, expected Level) {
+				l, err := StringToLevel(input)
+				Expect(err).NotTo(HaveOccurred())
+				Expect(l).To(Equal(expected))
+			},
+			T.Entry("emergency->EmergLevel", EmergLevelStr, EmergLevel),
+			T.Entry("alert->AlertLevel", AlertLevelStr, AlertLevel),
+			T.Entry("critical->CritLevel", CritLevelStr, CritLevel),
+			T.Entry("error->ErrLevel", ErrLevelStr, ErrLevel),
+			T.Entry("warning->WarningLevel", WarningLevelStr, WarningLevel),
+			T.Entry("notice->NoticeLevel", NoticeLevelStr, NoticeLevel),
+			T.Entry("info->InfoLevel", InfoLevelStr, InfoLevel),
+			T.Entry("debug->DebugLevel", DebugLevelStr, DebugLevel),
+		)
+		It("should return invalid log level and ErrInvalidLogLevel on unmatched input", func() {
+			badInput := "!#@mam12"
+			l, err := StringToLevel(badInput)
+			Expect(err).To(Equal(ErrInvalidLogLevel))
+			Expect(l.IsValid()).To(BeFalse())
 		})
 	})
 })

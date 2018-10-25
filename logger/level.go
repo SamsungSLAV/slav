@@ -47,28 +47,77 @@ const (
 	DebugLevel
 )
 
+// Log levels strings
+const (
+	// EmergLevelStr is string representation of EmergLevel
+	EmergLevelStr = "emergency"
+	// AlertLevelStr is string representation of AlertLevel
+	AlertLevelStr = "alert"
+	// CritLevelStr is string representation of CritLevel
+	CritLevelStr = "critical"
+	// ErrLevelStr is string representation of ErrLevel
+	ErrLevelStr = "error"
+	// WarningLevelStr is string representation of WarningLevel
+	WarningLevelStr = "warning"
+	// NoticeLevelStr is string representation of NoticeLevel
+	NoticeLevelStr = "notice"
+	// InfoLevelStr is string representation of InfoLevel
+	InfoLevelStr = "info"
+	// DebugLevelStr is string representation of DebugLevel
+	DebugLevelStr = "debug"
+	// UnknownLevel is string representation of unknown logging level
+	UnknownLevelStr = "unknown"
+)
+
 // String converts Level to human readable string.
 func (l Level) String() string {
 	switch l {
 	case EmergLevel:
-		return "emergency"
+		return EmergLevelStr
 	case AlertLevel:
-		return "alert"
+		return AlertLevelStr
 	case CritLevel:
-		return "critical"
+		return CritLevelStr
 	case ErrLevel:
-		return "error"
+		return ErrLevelStr
 	case WarningLevel:
-		return "warning"
+		return WarningLevelStr
 	case NoticeLevel:
-		return "notice"
+		return NoticeLevelStr
 	case InfoLevel:
-		return "info"
+		return InfoLevelStr
 	case DebugLevel:
-		return "debug"
+		return DebugLevelStr
 	default:
-		return "unknown"
+		return UnknownLevelStr
 	}
+}
+
+// StringToLevel converts string value to loggers' Level type.
+// It is to be used when providing user with ability to specify
+// logging level - e.g. setting log level via cli flag..
+// If string is not matched, invalid level (DebugLevel+1) and
+// ErrInvalidLogLevel is returned.
+func StringToLevel(l string) (Level, error) {
+	switch l {
+	case EmergLevelStr:
+		return EmergLevel, nil
+	case AlertLevelStr:
+		return AlertLevel, nil
+	case CritLevelStr:
+		return CritLevel, nil
+	case ErrLevelStr:
+		return ErrLevel, nil
+	case WarningLevelStr:
+		return WarningLevel, nil
+	case NoticeLevelStr:
+		return NoticeLevel, nil
+	case InfoLevelStr:
+		return InfoLevel, nil
+	case DebugLevelStr:
+		return DebugLevel, nil
+	}
+	return DebugLevel + 1, ErrInvalidLogLevel
 }
 
 // IsValid verifies if level has a valid value.
