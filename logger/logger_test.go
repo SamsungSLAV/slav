@@ -35,7 +35,6 @@ var _ = Describe("Logger", func() {
 		format             = string("%s >>> %s")
 		expectedMessage    = string(testMessage + " >>> " + anotherTestMessage)
 		thisFile           = string("logger_test.go")
-		thisPackage        = string("git.tizen.org/tools/slav/logger")
 	)
 	var (
 		ctrl    *gomock.Controller

@@ -36,7 +36,6 @@ var _ = Describe("Default", func() {
 		format             = string("%s >>> %s")
 		expectedMessage    = string(testMessage + " >>> " + anotherTestMessage)
 		thisFile           = string("default_test.go")
-		thisPackage        = string("git.tizen.org/tools/slav/logger")
 	)
 
 	It("defaultLogger should be already initialized", func() {

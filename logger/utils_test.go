@@ -21,6 +21,8 @@ import (
 	"os"
 )
 
+const thisPackage = string("git.tizen.org/tools/slav/logger")
+
 func withStderrMocked(testFunction func()) string {
 	r, w, _ := os.Pipe()
 

@@ -45,8 +45,7 @@ func (c *CallContextTest) byPointer(depth int) *CallContext {
 
 var _ = Describe("CallContext", func() {
 	const (
-		thisFile    = "call_context_test.go"
-		thisPackage = "git.tizen.org/tools/slav/logger"
+		thisFile = "call_context_test.go"
 	)
 	var (
 		thisPath = P.Join(build.Default.GOPATH, "src", thisPackage) + "/"
