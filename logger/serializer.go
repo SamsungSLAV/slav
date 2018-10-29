@@ -16,8 +16,6 @@
 
 package logger
 
-//go:generate mockgen -package logger -destination=serializer_mock_test.go -write_package_comment=false git.tizen.org/tools/slav/logger Serializer
-
 // Serializer converts entry into raw bytes slice.
 // After that it is ready to be passed to Writer.
 type Serializer interface {

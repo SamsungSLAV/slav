@@ -16,8 +16,6 @@
 
 package logger
 
-//go:generate mockgen -package logger -destination=filter_mock_test.go -write_package_comment=false git.tizen.org/tools/slav/logger Filter
-
 // Filter verifies if entry should be logged by a backend.
 type Filter interface {
 	// Verify decides if log entry should be processed by a backend.

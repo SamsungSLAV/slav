@@ -16,15 +16,6 @@
 
 package logger
 
-// Writer enhances io.Writer Write method with Level parameter.
-//
-// Write writes len(p) bytes from p to the underlying data stream.
-// It returns the number of bytes written from p (0 <= n <= len(p))
-// and any error encountered that caused the write to stop early.
-// Write must return a non-nil error if it returns n < len(p).
-// Write must not modify the slice data, even temporarily.
-//
-// Implementations must not retain p.
-type Writer interface {
-	Write(level Level, p []byte) (n int, err error)
-}
+//go:generate mockgen -package logger -destination=filter_mock_test.go -write_package_comment=false git.tizen.org/tools/slav/logger Filter
+//go:generate mockgen -package logger -destination=serializer_mock_test.go -write_package_comment=false git.tizen.org/tools/slav/logger Serializer
+//go:generate mockgen -package logger -destination=writer_mock_test.go -write_package_comment=false git.tizen.org/tools/slav/logger Writer
