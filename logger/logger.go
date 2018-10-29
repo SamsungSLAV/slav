@@ -122,7 +122,9 @@ func (l *Logger) process(entry *Entry) {
 	for name, backend := range l.backends {
 		err := backend.process(entry)
 		if err != nil {
-			fmt.Fprintf(os.Stderr, "Error <%s> printing log message to <%s> backend.\n", err.Error(), name)
+			// The error is printed to stderr. Potential fail of printing is ignored.
+			_, _ = fmt.Fprintf(os.Stderr, "Error <%s> printing log message to <%s> backend.\n",
+				err.Error(), name)
 		}
 	}
 }

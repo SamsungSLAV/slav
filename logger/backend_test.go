@@ -71,7 +71,8 @@ var _ = Describe("Backend", func() {
 			err := mb.process(e)
 			Expect(err).NotTo(HaveOccurred())
 		})
-		It("should pass filter, serialize and write log message but return error when writing fails", func() {
+		It("should pass filter, serialize and write log message"+
+			" but return error when writing fails", func() {
 			gomock.InOrder(
 				mf.EXPECT().Verify(e).Return(true, nil),
 				ms.EXPECT().Serialize(e).Return(buf, nil),

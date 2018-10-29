@@ -146,16 +146,19 @@ var _ = Describe("Logger", func() {
 		})
 		Describe("PassThreshold", func() {
 			It("should pass threshold for high priority levels", func() {
-				levels := []Level{EmergLevel, AlertLevel, CritLevel, ErrLevel, WarningLevel, NoticeLevel, InfoLevel, DebugLevel, Level(0xBADC0DE)}
+				levels := []Level{EmergLevel, AlertLevel, CritLevel, ErrLevel, WarningLevel,
+					NoticeLevel, InfoLevel, DebugLevel, Level(0xBADC0DE)}
 				for ti, thr := range levels[:len(levels)-1] {
 					err := L.SetThreshold(thr)
 					Expect(err).NotTo(HaveOccurred(), "setting threshold to %s", thr)
 
 					for _, lvl := range levels[:ti] {
-						Expect(L.PassThreshold(lvl)).To(BeTrue(), "threshold %s; level %s", thr, lvl)
+						Expect(L.PassThreshold(lvl)).To(BeTrue(), "threshold %s; level %s",
+							thr, lvl)
 					}
 					for _, lvl := range levels[ti+1:] {
-						Expect(L.PassThreshold(lvl)).To(BeFalse(), "threshold %s; level %s", thr, lvl)
+						Expect(L.PassThreshold(lvl)).To(BeFalse(), "threshold %s; level %s",
+							thr, lvl)
 					}
 				}
 			})
@@ -300,7 +303,8 @@ var _ = Describe("Logger", func() {
 				T.Entry("InfoLevel", InfoLevel),
 				T.Entry("DebugLevel", DebugLevel),
 			)
-			T.DescribeTable("should properly set level and log message and pass to logger's backend",
+			T.DescribeTable("should properly set level and log message and pass"+
+				" to logger's backend",
 				func(level Level, testedFunction func(*Logger, ...interface{})) {
 					mf.EXPECT().Verify(gomock.Any()).DoAndReturn(func(entry *Entry) (bool, error) {
 						Expect(entry.Level).To(Equal(level))
@@ -338,7 +342,8 @@ var _ = Describe("Logger", func() {
 				T.Entry("InfoLevel", InfoLevel),
 				T.Entry("DebugLevel", DebugLevel),
 			)
-			T.DescribeTable("should properly set level and log message and pass to logger's backend",
+			T.DescribeTable("should properly set level and log message and pass"+
+				" to logger's backend",
 				func(level Level, testedFunction func(*Logger, string, ...interface{})) {
 					mf.EXPECT().Verify(gomock.Any()).DoAndReturn(func(entry *Entry) (bool, error) {
 						Expect(entry.Level).To(Equal(level))
