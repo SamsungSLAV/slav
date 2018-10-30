@@ -16,6 +16,6 @@
 
 package logger
 
-//go:generate mockgen -package logger -destination=filter_mock_test.go -write_package_comment=false git.tizen.org/tools/slav/logger Filter
-//go:generate mockgen -package logger -destination=serializer_mock_test.go -write_package_comment=false git.tizen.org/tools/slav/logger Serializer
-//go:generate mockgen -package logger -destination=writer_mock_test.go -write_package_comment=false git.tizen.org/tools/slav/logger Writer
+//go:generate mockgen -package logger -destination=filter_mock_test.go -write_package_comment=false github.com/SamsungSLAV/slav/logger Filter
+//go:generate mockgen -package logger -destination=serializer_mock_test.go -write_package_comment=false github.com/SamsungSLAV/slav/logger Serializer
+//go:generate mockgen -package logger -destination=writer_mock_test.go -write_package_comment=false github.com/SamsungSLAV/slav/logger Writer
