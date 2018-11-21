@@ -1,0 +1,44 @@
+pipeline {
+    agent { docker 'localhost:5000/slav-ci' }
+    stages {
+        stage('Prepare') {
+            environment {
+                GIT_COMMITTER_NAME = 'bbotslav'
+                GIT_COMMITTER_EMAIL = 'bbotslav@gmail.com'
+            }
+            steps {
+                sh '''mkdir -p $GOPATH/src/github.com/SamsungSLAV
+                for proj in "muxpi" "boruta" "weles" "perun"; do
+                    cd $GOPATH/src/github.com/SamsungSLAV/$proj
+                    git fetch origin
+                    git reset --hard origin/master
+                done'''
+                sh '''cd $GOPATH/src/github.com/$GERRIT_PROJECT
+                git fetch git://review.gerrithub.io/$GERRIT_PROJECT $GERRIT_REFSPEC
+                git checkout FETCH_HEAD'''
+                setGerritReview unsuccessfulMessage: 'downloading patchset or dependencies failed...'
+                sh 'go get -v -u git.tizen.org/$GERRIT_PROJECT/...'
+            }
+        }
+        stage('Build') {
+            steps {
+                sh 'go build -x github.com/$GERRIT_PROJECT/...'
+                setGerritReview unsuccessfulMessage: 'build failed...'
+            }
+        }
+        stage('Test') {
+            steps {
+                ansiColor('xterm') {
+                    setGerritReview unsuccessfulMessage: 'tests failed...'
+                    sh 'go test github.com/$GERRIT_PROJECT/... -count=1'
+                }
+            }
+        }
+        stage('Code review') {
+            steps {
+                    setGerritReview unsuccessfulMessage: 'gometalinter check failed'
+                    sh 'cd $GOPATH/src/github.com/$GERRIT_PROJECT && gometalinter ./...'
+            }
+        }
+    }
+}
