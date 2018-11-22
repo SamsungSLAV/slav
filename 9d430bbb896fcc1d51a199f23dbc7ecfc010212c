@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ec37894c_2d939003",
+        "filename": "logger/serializer_text_test.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1015221
+      },
+      "writtenOn": "2018-11-22T13:22:08Z",
+      "side": 1,
+      "message": "nope, I like this test case to be commented as it is now.",
+      "parentUuid": "1d108484_f96a1124",
+      "range": {
+        "startLine": 296,
+        "startChar": 14,
+        "endLine": 296,
+        "endChar": 39
+      },
+      "revId": "9d430bbb896fcc1d51a199f23dbc7ecfc010212c",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c9c24a88_09fd8a46",
         "filename": "logger/serializer_text_test.go",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2018-11-22T13:16:16Z",
       "side": 1,
       "message": "misspelled.\n\nbtw:\nBrasilla\nBrazilla\nBra-zilla\nhttps://imgur.com/a/NTDMc10",
+      "range": {
+        "startLine": 299,
+        "startChar": 18,
+        "endLine": 299,
+        "endChar": 26
+      },
+      "revId": "9d430bbb896fcc1d51a199f23dbc7ecfc010212c",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7378fcb_d027c053",
+        "filename": "logger/serializer_text_test.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1015221
+      },
+      "writtenOn": "2018-11-22T13:22:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c9c24a88_09fd8a46",
       "range": {
         "startLine": 299,
         "startChar": 18,
