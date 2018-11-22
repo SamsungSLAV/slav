@@ -14,7 +14,6 @@
  *  limitations under the License
  */
 
-// Package logger provides logging mechanism for SLAV projects.
 package logger
 
 import (
