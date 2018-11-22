@@ -270,16 +270,33 @@ var _ = Describe("SerializerText", func() {
 			T.DescribeTable("should serialize proper time when time stamp is set to Full",
 				func(days int, expected string) {
 					s.TimestampMode = TimestampModeFull
-					stamp := time.Unix(1234567890, 0).AddDate(0, 0, days)
+					stamp := time.Unix(1234567890, 0).AddDate(0, 0, days).UTC()
 					err := s.appendTimestamp(buf, &stamp)
 
 					Expect(err).NotTo(HaveOccurred())
 					Expect(buf.String()).To(Equal(expected))
 				},
-				T.Entry("Day", 1, "[2009-02-15T00:31:30+01:00] "),
-				T.Entry("Week", 7, "[2009-02-21T00:31:30+01:00] "),
-				T.Entry("Month", 30, "[2009-03-16T00:31:30+01:00] "),
-				T.Entry("Year", 365, "[2010-02-14T00:31:30+01:00] "),
+				T.Entry("Day", 1, "[2009-02-14T23:31:30Z] "),
+				T.Entry("Week", 7, "[2009-02-20T23:31:30Z] "),
+				T.Entry("Month", 30, "[2009-03-15T23:31:30Z] "),
+				T.Entry("Year", 365, "[2010-02-13T23:31:30Z] "),
+			)
+			T.DescribeTable("should serialize proper time stamp using different timezones",
+				func(zoneName string, expected string) {
+					loc, err := time.LoadLocation(zoneName)
+					Expect(err).NotTo(HaveOccurred())
+
+					s.TimestampMode = TimestampModeFull
+					stamp := time.Unix(1234567890, 0).In(loc)
+					err = s.appendTimestamp(buf, &stamp)
+
+					Expect(err).NotTo(HaveOccurred())
+					Expect(buf.String()).To(Equal(expected))
+				},
+				T.Entry("Coordinated Universal Time", "UTC", "[2009-02-13T23:31:30Z] "),
+				T.Entry("Korea Standard Time", "Asia/Seoul", "[2009-02-14T08:31:30+09:00] "),
+				T.Entry("Central European Time", "CET", "[2009-02-14T00:31:30+01:00] "),
+				T.Entry("West Brasilla Time", "Brazil/West", "[2009-02-13T19:31:30-04:00] "),
 			)
 			T.DescribeTable("should return error if writing fails",
 				func(mode TimestampMode) {
