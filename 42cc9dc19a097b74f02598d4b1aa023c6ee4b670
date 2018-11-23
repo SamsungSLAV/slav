@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "544bd9f2_83297ad7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1015231
+      },
+      "writtenOn": "2018-11-23T14:10:20Z",
+      "side": 1,
+      "message": "https://pbs.twimg.com/media/CS2quIyUAAAv4eJ.jpg",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 35
+      },
+      "revId": "42cc9dc19a097b74f02598d4b1aa023c6ee4b670",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab9dd12d_9fe69c2d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1015231
+      },
+      "writtenOn": "2018-11-23T14:10:20Z",
+      "side": 1,
+      "message": "(if someone is using goenv like me - you need to additionally pass goroot parameter to godoc)",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 19
+      },
+      "revId": "42cc9dc19a097b74f02598d4b1aa023c6ee4b670",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": true
+    }
+  ]
+}
