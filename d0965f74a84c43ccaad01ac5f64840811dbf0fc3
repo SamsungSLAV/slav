@@ -59,6 +59,41 @@
     },
     {
       "key": {
+        "uuid": "d659ae6f_e97ac522",
+        "filename": "logger/doc.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1015221
+      },
+      "writtenOn": "2018-11-23T11:32:35Z",
+      "side": 1,
+      "message": "This is an example output and that should be mentioned. All Entry information can be serialized in many different ways.",
+      "parentUuid": "f6f4e0e1_953d4a40",
+      "revId": "d0965f74a84c43ccaad01ac5f64840811dbf0fc3",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae824be7_a0f624fe",
+        "filename": "logger/doc.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1015221
+      },
+      "writtenOn": "2018-11-23T11:32:35Z",
+      "side": 1,
+      "message": "this suggests that setting threshold is required for every log.\n\nDescribe threshold in separate paragraph.",
+      "revId": "d0965f74a84c43ccaad01ac5f64840811dbf0fc3",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e921673c_92e48dc9",
         "filename": "logger/doc.go",
         "patchSetId": 1
