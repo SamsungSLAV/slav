@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "410b8d8d_d926d284",
+        "filename": "logger/doc.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1015231
+      },
+      "writtenOn": "2018-11-23T14:07:08Z",
+      "side": 1,
+      "message": "Removed",
+      "parentUuid": "5cf6fe52_bb13d9f8",
+      "range": {
+        "startLine": 29,
+        "startChar": 0,
+        "endLine": 36,
+        "endChar": 46
+      },
+      "revId": "d0965f74a84c43ccaad01ac5f64840811dbf0fc3",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e7b9aa95_fac9a798",
         "filename": "logger/doc.go",
         "patchSetId": 1
@@ -39,6 +63,24 @@
       "revId": "d0965f74a84c43ccaad01ac5f64840811dbf0fc3",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aef1ab32_d4b5fd2a",
+        "filename": "logger/doc.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1015231
+      },
+      "writtenOn": "2018-11-23T14:07:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e7b9aa95_fac9a798",
+      "revId": "d0965f74a84c43ccaad01ac5f64840811dbf0fc3",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +113,24 @@
       "side": 1,
       "message": "This is an example output and that should be mentioned. All Entry information can be serialized in many different ways.",
       "parentUuid": "f6f4e0e1_953d4a40",
+      "revId": "d0965f74a84c43ccaad01ac5f64840811dbf0fc3",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b833d2a_1baeb036",
+        "filename": "logger/doc.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1015231
+      },
+      "writtenOn": "2018-11-23T14:07:08Z",
+      "side": 1,
+      "message": "added error, added info that this is output using default settings. pointed reader to backend section for more info",
+      "parentUuid": "d659ae6f_e97ac522",
       "revId": "d0965f74a84c43ccaad01ac5f64840811dbf0fc3",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
       "unresolved": true
@@ -117,6 +177,30 @@
     },
     {
       "key": {
+        "uuid": "6a705c7b_6f197a22",
+        "filename": "logger/doc.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1015231
+      },
+      "writtenOn": "2018-11-23T14:07:08Z",
+      "side": 1,
+      "message": "removed this section, it was too long and is fully conveyed in the comment above setting threshold.",
+      "parentUuid": "e921673c_92e48dc9",
+      "range": {
+        "startLine": 67,
+        "startChar": 35,
+        "endLine": 67,
+        "endChar": 42
+      },
+      "revId": "d0965f74a84c43ccaad01ac5f64840811dbf0fc3",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5f32e3a2_fd99fba7",
         "filename": "logger/doc.go",
         "patchSetId": 1
@@ -131,6 +215,24 @@
       "revId": "d0965f74a84c43ccaad01ac5f64840811dbf0fc3",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90cf0bb3_d22f2dfe",
+        "filename": "logger/doc.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1015231
+      },
+      "writtenOn": "2018-11-23T14:07:08Z",
+      "side": 1,
+      "message": "Adjusted to show difference - calls with and without IncDepth are present.\nadded line numbers and output to show explicitly how it works.",
+      "parentUuid": "5f32e3a2_fd99fba7",
+      "revId": "d0965f74a84c43ccaad01ac5f64840811dbf0fc3",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
     },
     {
       "key": {
@@ -151,6 +253,24 @@
     },
     {
       "key": {
+        "uuid": "c4b77790_2759872b",
+        "filename": "logger/doc.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1015231
+      },
+      "writtenOn": "2018-11-23T14:07:08Z",
+      "side": 1,
+      "message": "adjusted all code snippets to be consistent with gofmt formatting",
+      "parentUuid": "29227b1d_117c783e",
+      "revId": "d0965f74a84c43ccaad01ac5f64840811dbf0fc3",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7783c7a9_05796ba6",
         "filename": "logger/doc.go",
         "patchSetId": 1
@@ -165,6 +285,24 @@
       "revId": "d0965f74a84c43ccaad01ac5f64840811dbf0fc3",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d3b1f2c_6be087ec",
+        "filename": "logger/doc.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1015231
+      },
+      "writtenOn": "2018-11-23T14:07:08Z",
+      "side": 1,
+      "message": "they were not unnecessary but removed them alongside the // rather ... comment",
+      "parentUuid": "7783c7a9_05796ba6",
+      "revId": "d0965f74a84c43ccaad01ac5f64840811dbf0fc3",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
     },
     {
       "key": {
@@ -188,6 +326,30 @@
       "revId": "d0965f74a84c43ccaad01ac5f64840811dbf0fc3",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ee02691_50feeeb1",
+        "filename": "logger/doc.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1015231
+      },
+      "writtenOn": "2018-11-23T14:07:08Z",
+      "side": 1,
+      "message": "replace it is",
+      "parentUuid": "78831469_4b0338b9",
+      "range": {
+        "startLine": 171,
+        "startChar": 92,
+        "endLine": 171,
+        "endChar": 100
+      },
+      "revId": "d0965f74a84c43ccaad01ac5f64840811dbf0fc3",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
     }
   ]
 }
