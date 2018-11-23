@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "24293e0d_92154b41",
+        "filename": "logger/doc.go",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1015221
+      },
+      "writtenOn": "2018-11-23T14:57:10Z",
+      "side": 1,
+      "message": "missing dot (see line 31)\nshould be:\n \"Some warning.\"",
+      "range": {
+        "startLine": 36,
+        "startChar": 42,
+        "endLine": 36,
+        "endChar": 46
+      },
+      "revId": "40e72892f83946e6a86ffdeeef68ef9550d344ab",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3690667a_efd00106",
+        "filename": "logger/doc.go",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1015221
+      },
+      "writtenOn": "2018-11-23T14:57:10Z",
+      "side": 1,
+      "message": "there\u0027s semicolon after each field, so last part of line should be:\n error:\"error msg\";}",
+      "range": {
+        "startLine": 36,
+        "startChar": 94,
+        "endLine": 36,
+        "endChar": 95
+      },
+      "revId": "40e72892f83946e6a86ffdeeef68ef9550d344ab",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd918f20_88b6dfb0",
+        "filename": "logger/doc.go",
+        "patchSetId": 2
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1015221
+      },
+      "writtenOn": "2018-11-23T14:57:10Z",
+      "side": 1,
+      "message": "spaces missing, should be:\n msg + \" IncDep(1)\"",
+      "range": {
+        "startLine": 124,
+        "startChar": 49,
+        "endLine": 124,
+        "endChar": 51
+      },
+      "revId": "40e72892f83946e6a86ffdeeef68ef9550d344ab",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": true
+    }
+  ]
+}
