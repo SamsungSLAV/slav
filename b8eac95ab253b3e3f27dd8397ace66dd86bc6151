@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "101b803b_ebce9fc5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1015231
+      },
+      "writtenOn": "2018-11-27T12:19:29Z",
+      "side": 1,
+      "message": "but it was readable!",
+      "range": {
+        "startLine": 18,
+        "startChar": 29,
+        "endLine": 18,
+        "endChar": 72
+      },
+      "revId": "b8eac95ab253b3e3f27dd8397ace66dd86bc6151",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "328db59b_17741e29",
+        "filename": "logger/doc.go",
+        "patchSetId": 3
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1015231
+      },
+      "writtenOn": "2018-11-27T12:19:29Z",
+      "side": 1,
+      "message": "[really minor] \ntimestamp and callcontext are described in following way:\n\nwhat - what it is - when it is filled\n\nwhy not do the same with level, message \n\nLevel - level of log message - defined during call to a logging function;\nMessage - description of situation that is logged - defined during call to a logging function;\nProperties - a key-value map of log message entities - defined during call to a logging function.",
+      "range": {
+        "startLine": 43,
+        "startChar": 46,
+        "endLine": 43,
+        "endChar": 68
+      },
+      "revId": "b8eac95ab253b3e3f27dd8397ace66dd86bc6151",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60ac34a2_78be6d87",
+        "filename": "logger/doc.go",
+        "patchSetId": 3
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1015231
+      },
+      "writtenOn": "2018-11-27T12:19:29Z",
+      "side": 1,
+      "message": "[minor]\non an existing",
+      "range": {
+        "startLine": 140,
+        "startChar": 40,
+        "endLine": 140,
+        "endChar": 43
+      },
+      "revId": "b8eac95ab253b3e3f27dd8397ace66dd86bc6151",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13669313_731c3bd4",
+        "filename": "logger/doc.go",
+        "patchSetId": 3
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1015231
+      },
+      "writtenOn": "2018-11-27T12:19:29Z",
+      "side": 1,
+      "message": "[minor]\nit",
+      "range": {
+        "startLine": 140,
+        "startChar": 91,
+        "endLine": 141,
+        "endChar": 9
+      },
+      "revId": "b8eac95ab253b3e3f27dd8397ace66dd86bc6151",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": true
+    }
+  ]
+}
