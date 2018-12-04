@@ -1,0 +1,543 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c447061f_910744de",
+        "filename": "velen/config.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1015221
+      },
+      "writtenOn": "2018-12-04T19:41:30Z",
+      "side": 1,
+      "message": "I prefer CAPITALIZED_NAMES for defines",
+      "range": {
+        "startLine": 4,
+        "startChar": 8,
+        "endLine": 4,
+        "endChar": 18
+      },
+      "revId": "6820296e5f53c6320d8111063d8c7aebda408d0f",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf97950d_ed9c926c",
+        "filename": "velen/velen-destroy.c",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1015221
+      },
+      "writtenOn": "2018-12-04T19:41:30Z",
+      "side": 1,
+      "message": "Why do you ignore these 2 error codes?\nIf given path does not exist or is not a mount point, should it be treated as an error?",
+      "range": {
+        "startLine": 10,
+        "startChar": 13,
+        "endLine": 10,
+        "endChar": 49
+      },
+      "revId": "6820296e5f53c6320d8111063d8c7aebda408d0f",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad0d8555_712943b2",
+        "filename": "velen/velen-destroy.c",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1015221
+      },
+      "writtenOn": "2018-12-04T19:41:30Z",
+      "side": 1,
+      "message": "perror is defined in \u003cstdio.h\u003e. It is not included in this file.",
+      "range": {
+        "startLine": 11,
+        "startChar": 4,
+        "endLine": 11,
+        "endChar": 10
+      },
+      "revId": "6820296e5f53c6320d8111063d8c7aebda408d0f",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77f21b6e_4b95934b",
+        "filename": "velen/velen-destroy.c",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1015221
+      },
+      "writtenOn": "2018-12-04T19:41:30Z",
+      "side": 1,
+      "message": "err will be -1 in this case.\nBut you make it being returned from main function. Program should return positive codes. Try EXIT_FAILURE or something...",
+      "revId": "6820296e5f53c6320d8111063d8c7aebda408d0f",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1858d42f_233a9f4a",
+        "filename": "velen/velen-destroy.c",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1015221
+      },
+      "writtenOn": "2018-12-04T19:41:30Z",
+      "side": 1,
+      "message": "code is duplicated - create a function that takes a path as an argument",
+      "revId": "6820296e5f53c6320d8111063d8c7aebda408d0f",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49215128_0bdb0d3e",
+        "filename": "velen/velen-destroy.c",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1015221
+      },
+      "writtenOn": "2018-12-04T19:41:30Z",
+      "side": 1,
+      "message": "EXIT_SUCCESS is defined in stdlib.h\nPlease include.",
+      "range": {
+        "startLine": 21,
+        "startChar": 9,
+        "endLine": 21,
+        "endChar": 21
+      },
+      "revId": "6820296e5f53c6320d8111063d8c7aebda408d0f",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d796493_0019c31a",
+        "filename": "velen/velen-prepare.c",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1015221
+      },
+      "writtenOn": "2018-12-04T19:41:30Z",
+      "side": 1,
+      "message": "Requires:\n       #include \u003csys/stat.h\u003e\n       #include \u003csys/types.h\u003e  \u003c-- missing",
+      "range": {
+        "startLine": 19,
+        "startChar": 8,
+        "endLine": 19,
+        "endChar": 13
+      },
+      "revId": "6820296e5f53c6320d8111063d8c7aebda408d0f",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cfdb520f_c46ecddf",
+        "filename": "velen/velen-prepare.c",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1015221
+      },
+      "writtenOn": "2018-12-04T19:41:30Z",
+      "side": 1,
+      "message": "include stdio.h missing",
+      "range": {
+        "startLine": 21,
+        "startChar": 4,
+        "endLine": 21,
+        "endChar": 10
+      },
+      "revId": "6820296e5f53c6320d8111063d8c7aebda408d0f",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba9760c8_f1caddbf",
+        "filename": "velen/velen-prepare.c",
+        "patchSetId": 2
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1015221
+      },
+      "writtenOn": "2018-12-04T19:41:30Z",
+      "side": 1,
+      "message": "requires\n       #include \u003csys/types.h\u003e  \u003c-- missing\n       #include \u003cpwd.h\u003e",
+      "range": {
+        "startLine": 65,
+        "startChar": 26,
+        "endLine": 65,
+        "endChar": 34
+      },
+      "revId": "6820296e5f53c6320d8111063d8c7aebda408d0f",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e65ee021_edb078dd",
+        "filename": "velen/velen-prepare.c",
+        "patchSetId": 2
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1015221
+      },
+      "writtenOn": "2018-12-04T19:41:30Z",
+      "side": 1,
+      "message": "$ make\ncc -o velen velen.c\nIn file included from velen.c:5:0:\nvelen-prepare.c: In function ‘velen_prepare’:\nvelen-prepare.c:77:5: error: ‘for’ loop initial declarations are only allowed in C99 mode\n     for (int i \u003d 0; paths[i] !\u003d NULL; i++) {\n     ^\nvelen-prepare.c:77:5: note: use option -std\u003dc99 or -std\u003dgnu99 to compile your code\nmake: *** [velen] Error 1",
+      "revId": "6820296e5f53c6320d8111063d8c7aebda408d0f",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "504593bd_e19a0389",
+        "filename": "velen/velen-prepare.c",
+        "patchSetId": 2
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1015221
+      },
+      "writtenOn": "2018-12-04T19:41:30Z",
+      "side": 1,
+      "message": "requires stdio.h",
+      "range": {
+        "startLine": 80,
+        "startChar": 8,
+        "endLine": 80,
+        "endChar": 13
+      },
+      "revId": "6820296e5f53c6320d8111063d8c7aebda408d0f",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b30fc38a_f5caf263",
+        "filename": "velen/velen-prepare.c",
+        "patchSetId": 2
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1015221
+      },
+      "writtenOn": "2018-12-04T19:41:30Z",
+      "side": 1,
+      "message": "requires stdlib.h",
+      "range": {
+        "startLine": 86,
+        "startChar": 9,
+        "endLine": 86,
+        "endChar": 21
+      },
+      "revId": "6820296e5f53c6320d8111063d8c7aebda408d0f",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43c244ed_34aa25e0",
+        "filename": "velen/velen-run.c",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1015221
+      },
+      "writtenOn": "2018-12-04T19:41:30Z",
+      "side": 1,
+      "message": "Don\u0027t do this. Use header if required",
+      "revId": "6820296e5f53c6320d8111063d8c7aebda408d0f",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9654f367_471835a2",
+        "filename": "velen/velen-run.c",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1015221
+      },
+      "writtenOn": "2018-12-04T19:41:30Z",
+      "side": 1,
+      "message": "This function is too long to read it easily.\nThere are few sequences related to mounting, chrooting, setting environment, execing. They could be placed in separate functions to make code more readable.",
+      "revId": "6820296e5f53c6320d8111063d8c7aebda408d0f",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f08fd9c2_f35d8c84",
+        "filename": "velen/velen-run.c",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1015221
+      },
+      "writtenOn": "2018-12-04T19:41:30Z",
+      "side": 1,
+      "message": "stdio.h",
+      "range": {
+        "startLine": 19,
+        "startChar": 4,
+        "endLine": 19,
+        "endChar": 10
+      },
+      "revId": "6820296e5f53c6320d8111063d8c7aebda408d0f",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24d72689_37b6a860",
+        "filename": "velen/velen-run.c",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1015221
+      },
+      "writtenOn": "2018-12-04T19:41:30Z",
+      "side": 1,
+      "message": "use NULL here as you\u0027ve done with filesystemtype param. The source should be ignored. Someone could misunderstand you and look for \"none\" mount point.",
+      "range": {
+        "startLine": 23,
+        "startChar": 14,
+        "endLine": 23,
+        "endChar": 21
+      },
+      "revId": "6820296e5f53c6320d8111063d8c7aebda408d0f",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81c30be7_f448cea5",
+        "filename": "velen/velen-run.c",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1015221
+      },
+      "writtenOn": "2018-12-04T19:41:30Z",
+      "side": 1,
+      "message": "#include \u003csys/mount.h\u003e",
+      "range": {
+        "startLine": 23,
+        "startChar": 8,
+        "endLine": 23,
+        "endChar": 13
+      },
+      "revId": "6820296e5f53c6320d8111063d8c7aebda408d0f",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4aa1e234_ec0d7ff3",
+        "filename": "velen/velen-run.c",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1015221
+      },
+      "writtenOn": "2018-12-04T19:41:30Z",
+      "side": 1,
+      "message": "make function that takes a list folders to be bind and call it once.",
+      "range": {
+        "startLine": 35,
+        "startChar": 0,
+        "endLine": 57,
+        "endChar": 3
+      },
+      "revId": "6820296e5f53c6320d8111063d8c7aebda408d0f",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76b7e129_3421b6fa",
+        "filename": "velen/velen-run.c",
+        "patchSetId": 2
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1015221
+      },
+      "writtenOn": "2018-12-04T19:41:30Z",
+      "side": 1,
+      "message": "unistd.h",
+      "range": {
+        "startLine": 59,
+        "startChar": 8,
+        "endLine": 59,
+        "endChar": 13
+      },
+      "revId": "6820296e5f53c6320d8111063d8c7aebda408d0f",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eddff888_33907218",
+        "filename": "velen/velen-run.c",
+        "patchSetId": 2
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1015221
+      },
+      "writtenOn": "2018-12-04T19:41:30Z",
+      "side": 1,
+      "message": "I\u0027m not a chroot expert, but this is wrong.\n\nYou should do only 2 things:\n1) change root of your process with:\n    err \u003d chroot(velen_path \"/overlay\");\n2) change working dir of your process to new root:\n    err \u003d chdir(\"/\");\nor to boruta-user home:\n    err \u003d chdir(\"/home/boruta-user/\");\n\nAnd that\u0027s all. It will affect only your current process and it will completely loose the old system\n\nWhy what you did is wrong:\n1) First chroot will change the working dir still on old filesystem mount as you didn\u0027t call pivot_root or chroot yet. So it should be called as the last of the sequence (step 2 in my solution)\n2) You don\u0027t need to call pivot_root. pivot_root mount you the old root in a new place and changes root to new one. It also affects all processes, not only the current (it will be isolated however in your case by unshare with CLONE_NEWFS).\nYou don\u0027t need old system however, so just use chroot to switch all path resolution and calls to new root.\n3) Calling both pivot_root and chroot causes you to change root twice. Definitely not necessary.\n4) Calling unmount with \"/\" after calling chroot will unmount your new mountpoint, because \"/\" is resolved to overlay path.\n\nI\u0027ve verified the solution with changes  I proposed and they work fine with multiple calls of velen-run in multiple prepare-destroy cycles.",
+      "range": {
+        "startLine": 59,
+        "startChar": 0,
+        "endLine": 81,
+        "endChar": 3
+      },
+      "revId": "6820296e5f53c6320d8111063d8c7aebda408d0f",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46efa962_f99082cf",
+        "filename": "velen/velen-run.c",
+        "patchSetId": 2
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1015221
+      },
+      "writtenOn": "2018-12-04T19:41:30Z",
+      "side": 1,
+      "message": "#include \u003csys/types.h\u003e\n       #include \u003cpwd.h\u003e",
+      "range": {
+        "startLine": 83,
+        "startChar": 24,
+        "endLine": 83,
+        "endChar": 32
+      },
+      "revId": "6820296e5f53c6320d8111063d8c7aebda408d0f",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "316269a3_174186a1",
+        "filename": "velen/velen-run.c",
+        "patchSetId": 2
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1015221
+      },
+      "writtenOn": "2018-12-04T19:41:30Z",
+      "side": 1,
+      "message": "Requires:\n       #include \u003csys/types.h\u003e\n       #include \u003cgrp.h\u003e\n\nCheck also other function calls.",
+      "range": {
+        "startLine": 89,
+        "startChar": 8,
+        "endLine": 89,
+        "endChar": 18
+      },
+      "revId": "6820296e5f53c6320d8111063d8c7aebda408d0f",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e344221_ed9577f1",
+        "filename": "velen/velen-run.c",
+        "patchSetId": 2
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1015221
+      },
+      "writtenOn": "2018-12-04T19:41:30Z",
+      "side": 1,
+      "message": "It should be discussed, if this is enough. I don\u0027t know. Comparing to shell there is e.g. PWD variable missing",
+      "range": {
+        "startLine": 107,
+        "startChar": 2,
+        "endLine": 141,
+        "endChar": 3
+      },
+      "revId": "6820296e5f53c6320d8111063d8c7aebda408d0f",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df963475_9db62d21",
+        "filename": "velen/velen-run.c",
+        "patchSetId": 2
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1015221
+      },
+      "writtenOn": "2018-12-04T19:41:30Z",
+      "side": 1,
+      "message": "calling it this way requires using an absolute path of run binary, e.g.\n  /bin/ls\ninstead of just:\n  ls\n\nConsider changing current behavior to call to /bin/bash with -c flag. I mean that, when someone calls:\n  velen-run ls\ncode will run:\n  execle(\"/bin/bash\", \"-c\", user_cmd, environ);\nwhere user_cmd is space-concatenated argv list passed by the user.",
+      "revId": "6820296e5f53c6320d8111063d8c7aebda408d0f",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6322d9a9_55d7d737",
+        "filename": "velen/velen.c",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1015221
+      },
+      "writtenOn": "2018-12-04T19:41:30Z",
+      "side": 1,
+      "message": "Why????!!!!???\nYou should include headers not source code files.\n\nNormally someone who want to build a project compiles all.c files and links them into binary.\nYou are lucky that your function are inline. So during compilation of this file all of them are happily treated as inlines and their code is used directly in main function, but ...\nThe same functions are compiled for the second time as you compile .c files and this time there is no usage for inline so the functions\u0027 code appear for the second time as external symbol functions:\n  # objdump -t velen | grep F | grep -v 00000000\n  00000948 l     F .text\t0000026c              velen_prepare\n  00000bb4 l     F .text\t000003d8              velen_run\n  00000f8c l     F .text\t00000094              velen_destroy\n  00001108 g     F .text\t00000002              __libc_csu_fini\n  000010cc g     F .text\t0000003c              __libc_csu_init\n  00001020 g     F .text\t000000ac              main\n\nThe compiler does not need to follow the inline keyword. So if the functions were a bit more complex it should create separate functions (and symbols) for them. This would case appearance of them twice and linker would not allow you to do so.\n\nSumming up.\n* Write code in .c files\n* Write function prototypes in .h files.\n* Include only .h files\nThe code will be available where you need it and compiled only once and available in binary only once.",
+      "range": {
+        "startLine": 5,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 26
+      },
+      "revId": "6820296e5f53c6320d8111063d8c7aebda408d0f",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": true
+    }
+  ]
+}
