@@ -1,0 +1,159 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "abc5e426_94e83345",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1015220
+      },
+      "writtenOn": "2018-12-10T18:50:56Z",
+      "side": 1,
+      "message": "I saw \"\u0027s\" is dropped in the next patch. I think I like \"SLAV CI\" better\n\nEither one is fine as long as they are used in a unified way",
+      "range": {
+        "startLine": 7,
+        "startChar": 23,
+        "endLine": 7,
+        "endChar": 32
+      },
+      "revId": "dd191cb2dcda875c93231761069381acf1b9678d",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab31b798_647417e0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1015220
+      },
+      "writtenOn": "2018-12-10T18:50:56Z",
+      "side": 1,
+      "message": "\u0027s?",
+      "range": {
+        "startLine": 10,
+        "startChar": 20,
+        "endLine": 10,
+        "endChar": 31
+      },
+      "revId": "dd191cb2dcda875c93231761069381acf1b9678d",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "857c5e8f_12f7ef49",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1015220
+      },
+      "writtenOn": "2018-12-10T18:50:56Z",
+      "side": 1,
+      "message": "Is it correct (are ... would)?",
+      "range": {
+        "startLine": 12,
+        "startChar": 53,
+        "endLine": 13,
+        "endChar": 7
+      },
+      "revId": "dd191cb2dcda875c93231761069381acf1b9678d",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89d5c64a_d84bc49c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1015220
+      },
+      "writtenOn": "2018-12-10T18:50:56Z",
+      "side": 1,
+      "message": "I don\u0027t get it\n\nOpen parenthesis does not have matching closing one",
+      "range": {
+        "startLine": 13,
+        "startChar": 59,
+        "endLine": 14,
+        "endChar": 48
+      },
+      "revId": "dd191cb2dcda875c93231761069381acf1b9678d",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9140b32_0d7c109a",
+        "filename": "ci/Dockerfile",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1015220
+      },
+      "writtenOn": "2018-12-10T18:50:56Z",
+      "side": 1,
+      "message": "Spaces might prove themselves more convenient for indentation adjustments (currently: mixed)",
+      "revId": "dd191cb2dcda875c93231761069381acf1b9678d",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0aa8f80_ef3e428b",
+        "filename": "ci/Dockerfile",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1015220
+      },
+      "writtenOn": "2018-12-10T18:50:56Z",
+      "side": 1,
+      "message": "tttrue ttthattt",
+      "range": {
+        "startLine": 11,
+        "startChar": 34,
+        "endLine": 11,
+        "endChar": 43
+      },
+      "revId": "dd191cb2dcda875c93231761069381acf1b9678d",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef934299_b7f24879",
+        "filename": "ci/Dockerfile",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1015220
+      },
+      "writtenOn": "2018-12-10T18:50:56Z",
+      "side": 1,
+      "message": "why?",
+      "range": {
+        "startLine": 28,
+        "startChar": 10,
+        "endLine": 28,
+        "endChar": 13
+      },
+      "revId": "dd191cb2dcda875c93231761069381acf1b9678d",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": true
+    }
+  ]
+}
