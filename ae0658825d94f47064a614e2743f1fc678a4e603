@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f417c682_cf4b28d4",
+        "filename": "ci/Jenkinsfile",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1015220
+      },
+      "writtenOn": "2018-12-10T18:55:11Z",
+      "side": 1,
+      "message": "can this be templated (\"{{ foo }}\")?",
+      "range": {
+        "startLine": 6,
+        "startChar": 37,
+        "endLine": 7,
+        "endChar": 58
+      },
+      "revId": "ae0658825d94f47064a614e2743f1fc678a4e603",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9cbf83e_3d95ac02",
+        "filename": "ci/Jenkinsfile",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1015220
+      },
+      "writtenOn": "2018-12-10T18:55:11Z",
+      "side": 1,
+      "message": "Isn\u0027t it done at the stage of building Docker image?",
+      "range": {
+        "startLine": 10,
+        "startChar": 22,
+        "endLine": 10,
+        "endChar": 65
+      },
+      "revId": "ae0658825d94f47064a614e2743f1fc678a4e603",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3983dd74_a53de8d2",
+        "filename": "ci/Jenkinsfile",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1015220
+      },
+      "writtenOn": "2018-12-10T18:55:11Z",
+      "side": 1,
+      "message": "Wouldn\u0027t more verbosity be useful here (like in \"get -v\" or \"build -x\" above)?",
+      "range": {
+        "startLine": 33,
+        "startChar": 27,
+        "endLine": 33,
+        "endChar": 31
+      },
+      "revId": "ae0658825d94f47064a614e2743f1fc678a4e603",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": true
+    }
+  ]
+}
