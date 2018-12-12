@@ -118,7 +118,6 @@ slav_setup()
         test -d "$SRC/$i" && rm -rf "$SRC/$i"
         git clone "git://$HOST/$i" "$SRC/$i"
     done
-    (cd $SRC/tools/boruta && git checkout origin/sandbox/amistewicz/demo_v4)
 
     export GOPATH="$D"
     (cd "$D" && $GO get ./...)
