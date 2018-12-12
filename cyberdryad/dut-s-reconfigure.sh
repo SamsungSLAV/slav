@@ -107,27 +107,27 @@ systemd_unit_enable()
 
 slav_setup()
 {
-    HOST=git.tizen.org
+    HOST=github.com
     D=/src/slav
     SRC="$D/src/$HOST"
 
-    mkdir -p "$D/pkg" "$SRC/tools"
+    mkdir -p "$D/pkg" "$SRC/SamsungSLAV"
 
-    for i in tools/boruta tools/weles tools/muxpi; do
+    for i in SamsungSLAV/boruta SamsungSLAV/weles SamsungSLAV/muxpi; do
         # assume previous invocation might have failed - better to fetch again
         test -d "$SRC/$i" && rm -rf "$SRC/$i"
-        git clone "git://$HOST/$i" "$SRC/$i"
+        git clone "https://$HOST/$i.git" "$SRC/$i"
     done
 
     export GOPATH="$D"
     (cd "$D" && $GO get ./...)
-    install -m0755 -t "$DESTDIR/bin" "$SRC/tools/muxpi/sw/nanopi/os/usr/local/bin/stm" "$GOPATH/bin/dryad"
+    install -m0755 -t "$DESTDIR/bin" "$SRC/SamsungSLAV/muxpi/sw/nanopi/os/usr/local/bin/stm" "$GOPATH/bin/dryad"
     install -m0755 "$GOPATH/bin/stm" "$DESTDIR/bin/stm.real"
     sed -i -e "s,/usr/bin/stm,$DESTDIR/bin/stm.real," "$DESTDIR/bin/stm"
 
     dryad_setup
     dryad_unit_install
-    stm_setup "$SRC/tools/muxpi"
+    stm_setup "$SRC/SamsungSLAV/muxpi"
     systemd_unit_enable
 }
 
