@@ -70,10 +70,10 @@ dryad_setup()
 stm_setup()
 {
     muxpi_path="$1"
-    install -m0644 "${muxpi_path}/sw/nanopi/stm.service" "$UNITDIR/stm.service"
+    install -m0644 "${muxpi_path}/sw/nanopi/stm/systemd/stm.service" "$UNITDIR/stm.service"
     sed -i -e 's/stm -serve/stm.real -serve -dummy/' "$UNITDIR/stm.service"
-    install -m0644 "${muxpi_path}/sw/nanopi/stm.socket" "$UNITDIR/stm.socket"
-    install -m0644 "${muxpi_path}/sw/nanopi/stm-user.socket" "$UNITDIR/stm-user.socket"
+    install -m0644 "${muxpi_path}/sw/nanopi/stm/systemd/stm.socket" "$UNITDIR/stm.socket"
+    install -m0644 "${muxpi_path}/sw/nanopi/stm/systemd/stm-user.socket" "$UNITDIR/stm-user.socket"
     sed -i -e "s,/usr/bin,$DESTDIR/bin,g" -e "s,WantedBy=sockets.target,WantedBy=basic.target," "$UNITDIR/stm.service" "$UNITDIR/stm.socket" "$UNITDIR/stm-user.socket"
     UNITS2ENABLE="$UNITS2ENABLE stm.socket stm-user.socket"
 
@@ -121,7 +121,7 @@ slav_setup()
 
     export GOPATH="$D"
     (cd "$D" && $GO get ./...)
-    install -m0755 -t "$DESTDIR/bin" "$SRC/SamsungSLAV/muxpi/sw/nanopi/os/usr/local/bin/stm" "$GOPATH/bin/dryad"
+    install -m0755 -t "$DESTDIR/bin" "$SRC/SamsungSLAV/muxpi/sw/nanopi/stm/stm" "$GOPATH/bin/dryad"
     install -m0755 "$GOPATH/bin/stm" "$DESTDIR/bin/stm.real"
     sed -i -e "s,/usr/bin/stm,$DESTDIR/bin/stm.real," "$DESTDIR/bin/stm"
 
