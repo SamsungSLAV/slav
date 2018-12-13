@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9f158adb_056ff35f",
+        "filename": "velen/velen-destroy.c",
+        "patchSetId": 8
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1015221
+      },
+      "writtenOn": "2018-12-13T15:14:04Z",
+      "side": 1,
+      "message": "or 0?\n\nWhat does it suppose to do ?",
+      "range": {
+        "startLine": 10,
+        "startChar": 4,
+        "endLine": 10,
+        "endChar": 20
+      },
+      "revId": "362b5674f3b137d06e4964f2938e78c418173fa0",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8762e859_c99136e7",
+        "filename": "velen/velen-run.c",
+        "patchSetId": 8
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1015221
+      },
+      "writtenOn": "2018-12-13T15:14:04Z",
+      "side": 1,
+      "message": "ha ha ha",
+      "revId": "362b5674f3b137d06e4964f2938e78c418173fa0",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5ddc3ec_bbea4520",
+        "filename": "velen/velen-run.c",
+        "patchSetId": 8
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1015221
+      },
+      "writtenOn": "2018-12-13T15:14:04Z",
+      "side": 1,
+      "message": "and if there will be 5 folders more you would use strcpy^5 ?\n\nPlease rewrite it in different way, maybe with sprintf",
+      "revId": "362b5674f3b137d06e4964f2938e78c418173fa0",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": true
+    }
+  ]
+}
