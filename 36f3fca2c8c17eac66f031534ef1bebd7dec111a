@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dfe387c0_a71826cc",
+        "filename": "velen/config.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1015221
+      },
+      "writtenOn": "2018-12-13T20:40:26Z",
+      "side": 1,
+      "message": "Please add also Copyrights and license to all source code files.",
+      "revId": "36f3fca2c8c17eac66f031534ef1bebd7dec111a",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "344f78c6_1b7afd52",
+        "filename": "velen/velen-run.c",
+        "patchSetId": 10
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1015221
+      },
+      "writtenOn": "2018-12-13T20:40:26Z",
+      "side": 1,
+      "message": "causes segmentation fault if veles-run is run without parameters",
+      "range": {
+        "startLine": 140,
+        "startChar": 15,
+        "endLine": 140,
+        "endChar": 21
+      },
+      "revId": "36f3fca2c8c17eac66f031534ef1bebd7dec111a",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    }
+  ]
+}
