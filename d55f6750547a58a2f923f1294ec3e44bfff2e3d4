@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b7b59b27_9fdd87e3",
+        "filename": "velen/velen-destroy.c",
+        "patchSetId": 12
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1015221
+      },
+      "writtenOn": "2018-12-18T15:38:03Z",
+      "side": 1,
+      "message": "This is also run at the start of velen-prepare and causes an error:\n  pi@nanopineo:~$ sudo velen-prepare \n  failed to remove directory: No such file or directory\n\nproblems with that:\n\n1) it\u0027s perfectly fine to do not have /overlay or /top folders when running velen-prepare - so I expect no errors here\n\n2) construction using || causes commands to run until first failing one only, so if I have only /top directory, it won\u0027t be removed, because remove_directory of /overlay will fail and it won\u0027t get to removing of top at all.\n\nKicker: as whole velen_destroy fails, the velen_prepare is not run at all, making this patchset completely useless :(\n\n3) The error message does not give me any information about the directory which was not removed. I don\u0027t know if the problem occured for /top or /overlay folder.",
+      "range": {
+        "startLine": 36,
+        "startChar": 0,
+        "endLine": 37,
+        "endChar": 43
+      },
+      "revId": "d55f6750547a58a2f923f1294ec3e44bfff2e3d4",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    }
+  ]
+}
