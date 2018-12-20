@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "391be9d3_d971c617",
+        "filename": "velen/velen-prepare.c",
+        "patchSetId": 14
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1015221
+      },
+      "writtenOn": "2018-12-20T19:55:06Z",
+      "side": 1,
+      "message": "what if VELEN_PATH is set to something else ?\n\nmaybe assign VELEN_PATH \"/top\" to variable and use the same variable twice for mkdir and error message.",
+      "range": {
+        "startLine": 48,
+        "startChar": 28,
+        "endLine": 48,
+        "endChar": 33
+      },
+      "revId": "f0644fe09d889233006797de3fa12f5041e4c619",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e24a8ae1_e9b5b5a7",
+        "filename": "velen/velen-prepare.c",
+        "patchSetId": 14
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1015221
+      },
+      "writtenOn": "2018-12-20T19:55:06Z",
+      "side": 1,
+      "message": "chroot is not enough. Not all of the paths must be absolute:\n\n* paths may be defined relative to user\u0027s home folder (with starting ~/). So You also require HOME env to be set properly\n\n  pi@nanopineo:~/velen$ sudo velen-prepare ~/test3\n  pi@nanopineo:~/velen$ ls -Zal /home/boruta-user/test3 ; ls -Zal /home/pi/test3 ; sudo ls -Zal /root/test3\n  -rw-r--r-- 1 root root ? 0 Dec  8 01:55 /home/boruta-user/test3\n  -rw-r--r-- 1 root root ? 0 Dec  8 01:55 /home/pi/test3\n  -rw-r--r-- 1 root root ? 0 Dec  8 01:57 /root/test3\n  pi@nanopineo:~/velen$ ls -Zal /tmp/velen/overlay/home/boruta-user/test3 ; ls -Zal /tmp/velen/overlay/home/pi/test3 ; sudo ls -Zal /tmp/velen/overlay/root/test3\n  -rw-r--r-- 1 root root ? 0 Dec  8 01:55 /tmp/velen/overlay/home/boruta-user/test3\n  -rw-r--r-- 1 boruta-user boruta-user ? 0 Dec  8 01:55 /tmp/velen/overlay/home/pi/test3\n  -rw-r--r-- 1 root root ? 0 Dec  8 01:57 /tmp/velen/overlay/root/test3\n\n* paths may also start with ./ or be just some filename, so current dir should also be set with chdir\nI prefer setting it to home/boruta-user.",
+      "revId": "f0644fe09d889233006797de3fa12f5041e4c619",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "871a9ec3_9f03997e",
+        "filename": "velen/velen-run.c",
+        "patchSetId": 14
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1015221
+      },
+      "writtenOn": "2018-12-20T19:55:06Z",
+      "side": 1,
+      "message": "yes this is necessary, without it / mountpoint is shared and bad things happen",
+      "revId": "f0644fe09d889233006797de3fa12f5041e4c619",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8c974f46_5a82d3fb",
+        "filename": "velen/velen-run.c",
+        "patchSetId": 14
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1015221
+      },
+      "writtenOn": "2018-12-20T19:55:06Z",
+      "side": 1,
+      "message": "I don\u0027t know :(\nI see the difference with it and without it: the mountpoint id tree has one additional level, you can see it in /proc/self/mountinfo\nbut I didn\u0027t find any behavioral difference",
+      "revId": "f0644fe09d889233006797de3fa12f5041e4c619",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5b091035_c344de98",
+        "filename": "velen/velen-run.c",
+        "patchSetId": 14
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1015221
+      },
+      "writtenOn": "2018-12-20T19:55:06Z",
+      "side": 1,
+      "message": "In my opinion it would be good to chroot to /home/boruta-user. It would make usage of velen much easier. All local files could be then created in current folder (proper rights).",
+      "revId": "f0644fe09d889233006797de3fa12f5041e4c619",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    }
+  ]
+}
