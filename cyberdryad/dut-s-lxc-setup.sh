@@ -8,7 +8,6 @@ set -ex
 VM_NAME=${DUT_VM_NAME:-dut-s}
 BORUTA_ADDRESS=${BORUTA_ADDRESS:-127.0.0.1}
 BORUTA_PORT=${BORUTA_PORT:-7175}
-UUID=$(uuidgen -r)
 
 lxc_install() {
     lxc-destroy -f -n "$VM_NAME" || true
@@ -31,7 +30,6 @@ tools_setup()
 DESTDIR=${DESTDIR}
 BORUTA_ADDRESS=${BORUTA_ADDRESS}
 BORUTA_PORT=${BORUTA_PORT}
-UUID=${UUID}
 EOF
     lxc-attach -n "$VM_NAME" -- "dut-s-reconfigure.sh"
 }

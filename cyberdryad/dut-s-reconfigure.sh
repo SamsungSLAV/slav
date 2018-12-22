@@ -64,7 +64,7 @@ dryad_setup()
     dryad || true
     sed -i \
         -e 's,boruta_address =.*,boruta_address = "'${BORUTA_ADDRESS}:${BORUTA_PORT}'",' \
-        -e "/\[caps\]/ a device_type = \"qemu\"\nDeviceType = \"qemu\"\narchitecture = \"$ARCH\"\nUUID = \"$UUID\"" \
+        -e "/\[caps\]/ a device_type = \"qemu\"\narchitecture = \"$ARCH\"" \
         -e 's!groups =.*!groups = [ "kvm", "libvirtd", "stm" ]!' \
         /etc/boruta/dryad.conf
 }

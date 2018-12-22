@@ -16,7 +16,6 @@ are installed:
 
 * git
 * lxc
-* uuid-runtime
 
 If for some reason setup inside lxc has failed (eg. due to network
 problems) you can try to repeat just this part:
