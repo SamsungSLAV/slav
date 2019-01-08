@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "22872be9_d008a738",
+        "filename": "velen/velen-run.c",
+        "patchSetId": 15
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1015221
+      },
+      "writtenOn": "2019-01-08T20:58:55Z",
+      "side": 1,
+      "message": "Restrictions from man pivot_root(2):\n\n       The following restrictions apply to new_root and put_old:\n\n       -  They must be directories.\n\n       -  new_root and put_old must not be on the same filesystem as the current root.\n\n       -  put_old must be underneath new_root, that is, adding a nonzero number of /.. to the string pointed to by put_old must yield the same directory as new_root.\n\n       -  No other filesystem may be mounted on put_old.\n\nIt seems that 2, 3 are violated.",
+      "revId": "65f6d33bfefb571652637500aa48441d0553b7ed",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    }
+  ]
+}
