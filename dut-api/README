@@ -1,0 +1,36 @@
+DUT API must be implemented on Dryads that are to be used by Weles.
+
+DUT API is implemneted when Dryad has avaliable in PATH following scripts:
+dut_boot.sh         - Should exit successfully when device is booted (ready for login)
+dut_login.sh        - Currently unused - should take login information as arguments
+dut_copyfrom.sh     - Copies $1 from DUT to $2 on Dryad/ Weles database mounted over sshfs
+dut_copyto.sh       - Copies $1 from Dryad/ Weles database mounted over sshfs to $2
+dut_exec.sh         - Executes command passed as argument on DUT
+
+
+sections:
+
+dut_boot
+
+dut_login
+
+dut_copyfrom
+
+dut_copyto
+
+dut_exec
+
+defining for each:
+what it does
+arguments
+when it should exit
+exit codes
+
+
+dut-api directory structure
+|-OS1
+|-OS2
+ |-board1
+ |-board2
+
+word on why they are divided in such way
