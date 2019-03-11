@@ -1,0 +1,41 @@
+####
+rpi3
+####
+
+
+*********************
+Connecting with MuxPi
+*********************
+
+
+To use DUT API scripts, some connections must be made:
+
+UART
+----
+
+You need to connect MuxPi's UART for DUT:
+https://muxpi.readthedocs.io/en/latest/hw-overview.html#uart
+
+with Raspberry Pi's UART - Pins 8, 10 on: https://pinout.xyz/#
+
+POWER
+-----
+
+Please see the MuxPi documentation to locate the connecitons this section refers to.
+
+https://muxpi.readthedocs.io/en/latest/hw-overview.html#other-connectors
+
+Power should be controllable by MuxPi. You need to connect 5V power source to DUT Power IN.
+Another connection should be between DUT power OUT and Raspberry Pi - you can either use MicroUSB
+connector or the pin connectors. We use the Micro USB connector.
+
+SD Card
+-------
+
+You will need a cable with a BLD10 connector on one side and a MicroSD card shaped board on the
+other side.
+
+You need to place a MicroSD card into MuxPi slot at the bottom of the board. Then you should
+connect SD Adapter to Raspberry Pi's MicroSD slot.
+
+https://muxpi.readthedocs.io/en/latest/hw-overview.html#sd-adapter

@@ -1,0 +1,28 @@
+#####
+tizen
+#####
+
+Tizen dut scripts depend on:
+* sdb
+
+****************
+sdb installation
+****************
+
+In our setting, the controller is arm-based.
+sdb needs to be built for that architecture.
+To do so, please follow this steps (should be run on debian based distro)
+
+::
+
+  apt install build-essential debhelper fakeroot libssl-dev libssl1.1 libncurses5-dev devscripts
+  git clone git://git.tizen.org/sdk/tools/sdb -b tizen_studio
+  cd sdb
+  sed -i -e 's/libssl1.0.0/libssl1.1/g' debian/control
+  dch -v 3.1.0-1 --package sdb "Everything has changed"
+  dpkg-buildpackage -uc -us
+
+
+This will result in ../sdb_3.1.0-1_armfhf.deb which can be installed with::
+
+  dpkg -i ../sdb*_armfhf.deb

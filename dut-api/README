@@ -1,0 +1,121 @@
+#######
+dut-api
+#######
+
+DUT API should be implemented by a DUT Controller (e.g. MuxPi) for Weles to interface with DUT and
+run tests on it.
+
+In this directory you will find:
+
+* DUT API definition
+* DUT API implementations
+
+
+******************************************
+dut-api directory structure/ naming schema
+******************************************
+
+::
+
+  .
+  │
+  └── some-operating-system-name - contains dut-api implementations for specific boards
+      │
+      └── rpi3 - dut-api implementation for Raspberry Pi3 (all models, except if other more specific avaliable)
+      │
+      └── rpi3b+ - dut-api implementation for Raspberry Pi3 B+ (only for B+ model)
+      │
+      └── odroid-u3 - dut-api implementation for Odroid U3.
+
+Each directory must include README file with explanations, dependencies, etc.
+
+
+******************
+dut-api definition
+******************
+
+DUT API must be implemented on Dryads that are to be used by Weles.
+
+It has been decided to use .sh scripts for ease of development.
+
+DUT API is implemented by placing:
+
+* dut_boot.sh       - Boot the DUT up.
+* dut_login.sh      - Open communication session.
+* dut_exec.sh       - Execute a command on DUT.
+* dut_copyfrom.sh   - Copy files from DUT.
+* dut_copyto.sh     - Copy files to DUT.
+
+scripts in `/usr/local/bin` directory.
+
+
+dut_boot.sh
+-----------
+
+DESCRIPTION:
+
+dut_boot.sh as could be inferred from the name, is for booting DUT up.
+
+dut_boot.sh does not take any parameters.
+
+Usually it consists of (but depends on your config- e.g. method of connecting DUT to Supervisor):
+
+* setting up connection (e.g. set up the UART parameters)
+* clean up after previous boots
+* power up the DUT
+* wait for DUT to boot (preferrably reading it's output rather than sleep)
+* check if the device has booted up correctly
+
+Weles interprets any non 0 exit code as failure.
+
+
+dut_login.sh
+------------
+
+dut_login.sh should open communication session with the DUT.
+
+As of now, it is not executed with any parameters. It is expected to take login information as
+parameters.
+
+Weles interprets any non 0 exit code as failure.
+
+
+dut_exec.sh
+-----------
+
+dut_exec.sh should execute command, passed as argument on DUT.
+
+It takes command to execute as parameter.
+
+Should return 0 if command was executed sucessfully (disregarding if exit status on DUT)
+
+
+dut_copyfrom.sh
+---------------
+
+dut_copyfrom.sh pulls a file from DUT to DUT Controller.
+
+It takes two parameters:
+$1 is the location of the file on DUT.
+$2 is the location of file on DUT Controller.
+
+Weles interprets any non 0 exit code as failure.
+
+
+dut_copyto.sh
+-------------
+
+dut_copyto.sh pushes a file from DUT controller to DUT.
+
+It takes two parameters:
+$1 is the location of file on DUT Controller.
+$2 is the location of the file on DUT.
+
+Weles interprets any non 0 exit code as failure.
+
+
+============
+Known issues
+============
+
+* No support for gracefully shutting DUT down.
