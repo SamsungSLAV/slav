@@ -1,0 +1,46 @@
+####
+SLAV
+####
+
+********
+Overview
+********
+
+SLAV is a stack of software and hardware layers for efficient resource sharing.
+Its main use case is to allow building board farms for automated test scenarios execution.
+
+It provides following `Test Standards`_ items:
+
+.. note::
+   Mapping below does not fully express layers purposes.
+   It is meant to clarify their function and simplify stack design description.
+
++----------------+-----------------------------------+---------+
+|      Item      |               Role                |  Layer  |
++================+===================================+=========+
+| Target Manager | Provide remote access to DUT [#]_ | MuxPi_  |
++----------------+-----------------------------------+---------+
+| Test Scheduler | Allow DUT [#]_ reservation        | Boruta_ |
++----------------+-----------------------------------+---------+
+|  Test Manager  | Handle Requests [#]_              | Weles_  |
++----------------+-----------------------------------+---------+
+
+These layers might be used together or independently.
+
+.. _`Test Standards`: https://elinux.org/Test_Standards
+.. [#] Device Under Test (`Test Glossary`_)
+.. _`Test Glossary`: https://elinux.org/Test_Glossary
+.. _MuxPi: https://github.com/SamsungSLAV/muxpi
+.. _Boruta: https://github.com/SamsungSLAV/boruta
+.. [#] To execute a test (`Test Glossary`_)
+.. _Weles: https://github.com/SamsungSLAV/weles
+
+
+*******
+License
+*******
+
+SLAV is distributed under `Apache 2.0 License`_
+
+.. _`Apache 2.0 License`: LICENSE
+
