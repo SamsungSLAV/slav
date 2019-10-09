@@ -1,0 +1,136 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7f184a2b_702e77f6",
+        "filename": "dut-api/README",
+        "patchSetId": 3
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1015210
+      },
+      "writtenOn": "2019-10-09T08:34:01Z",
+      "side": 1,
+      "message": "If we\u0027d like to stick to terms defined on elinux.org, the DUT controller term was rejected in the glossary: https://elinux.org/Test_Glossary#Rejected_terms\n\nAs a side note: DUT is under \u0027confusing terms\u0027 as some devs are using VMs). Maybe we should propose other term, e.g. System Under Test? Still, for now we should use the DUT term.",
+      "range": {
+        "startLine": 5,
+        "startChar": 35,
+        "endLine": 5,
+        "endChar": 49
+      },
+      "revId": "19fa96a682a929041d93f27074b43338449ac491",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cecc2a7b_7171b6d8",
+        "filename": "dut-api/README",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1015210
+      },
+      "writtenOn": "2019-10-09T08:34:01Z",
+      "side": 1,
+      "message": "elinux uses term \u0027Board management (layer)\u0027",
+      "revId": "19fa96a682a929041d93f27074b43338449ac491",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "029f5e79_184e4bd1",
+        "filename": "dut-api/README",
+        "patchSetId": 3
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1015210
+      },
+      "writtenOn": "2019-10-09T08:34:01Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 96,
+        "startChar": 41,
+        "endLine": 96,
+        "endChar": 55
+      },
+      "revId": "19fa96a682a929041d93f27074b43338449ac491",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ca9bade_d60f6ed0",
+        "filename": "dut-api/README",
+        "patchSetId": 3
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1015210
+      },
+      "writtenOn": "2019-10-09T08:34:01Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 100,
+        "startChar": 30,
+        "endLine": 100,
+        "endChar": 44
+      },
+      "revId": "19fa96a682a929041d93f27074b43338449ac491",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30cd1ec8_727888b5",
+        "filename": "dut-api/README",
+        "patchSetId": 3
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1015210
+      },
+      "writtenOn": "2019-10-09T08:34:01Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 108,
+        "startChar": 33,
+        "endLine": 108,
+        "endChar": 47
+      },
+      "revId": "19fa96a682a929041d93f27074b43338449ac491",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95d05f57_1f30ab7c",
+        "filename": "dut-api/README",
+        "patchSetId": 3
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1015210
+      },
+      "writtenOn": "2019-10-09T08:34:01Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 111,
+        "startChar": 30,
+        "endLine": 111,
+        "endChar": 44
+      },
+      "revId": "19fa96a682a929041d93f27074b43338449ac491",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": true
+    }
+  ]
+}
