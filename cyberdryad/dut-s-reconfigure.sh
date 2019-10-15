@@ -4,6 +4,8 @@ set -ex
 
 export GO=/usr/lib/go-1.10/bin/go
 
+RELEASE='v0.1.0'
+
 ARCH="$(uname -m)"
 UNITDIR="/etc/systemd/system"
 UNIT2ENABLE=""
@@ -116,7 +118,7 @@ slav_setup()
     for i in SamsungSLAV/boruta SamsungSLAV/weles SamsungSLAV/muxpi; do
         # assume previous invocation might have failed - better to fetch again
         test -d "$SRC/$i" && rm -rf "$SRC/$i"
-        git clone "https://$HOST/$i.git" "$SRC/$i"
+        git clone --branch "$RELEASE" "https://$HOST/$i.git" "$SRC/$i"
     done
 
     export GOPATH="$D"
