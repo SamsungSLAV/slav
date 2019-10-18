@@ -1,0 +1,8 @@
+---
+- name: Install git
+  become: true
+  apt: name=git state=present
+
+- name: Install GCC
+  become: true
+  apt: name=gcc state=present

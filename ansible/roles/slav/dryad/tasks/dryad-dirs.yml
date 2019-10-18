@@ -1,0 +1,14 @@
+---
+- name: Create GOPATH directory
+  file: path={{ hostvars[inventory_hostname].gopath }} state=directory
+  when: GOPATH is undefined
+
+- name: Create directory for SLAV
+  file:
+    path: "{{ hostvars[inventory_hostname].gopath }}/src/github.com/SamsungSLAV"
+    state: directory
+
+- name: Create directory for ARMv7 executables
+  file:
+    path: "{{ hostvars[inventory_hostname].gopath }}/bin/linux_armv7"
+    state: directory

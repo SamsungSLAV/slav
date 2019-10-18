@@ -1,50 +1,20 @@
 ---
-- name: Install git
-  apt: name=git state=present
+- import_tasks: boruta-reqs.yml
+  tags:
+    - boruta
+    - boruta:reqs
 
-- name: Create GOPATH directory
-  file: path={{ hostvars[inventory_hostname].gopath }} state=directory
-  when: GOPATH is undefined
+- import_tasks: boruta-dirs.yml
+  tags:
+    - boruta
+    - boruta:dirs
 
-- name: Create directory for SLAV
-  file:
-    path: "{{ hostvars[inventory_hostname].gopath }}/src/github.com/SamsungSLAV"
-    state: directory
+- import_tasks: boruta-build.yml
+  tags:
+    - boruta
+    - boruta:build
 
-- name: Get Boruta src
-  git:
-    repo: 'https://github.com/SamsungSLAV/boruta'
-    dest: "{{ hostvars[inventory_hostname].gopath }}/src/github.com/SamsungSLAV/boruta"
-    version: 'v0.1.0'
-
-- name: Get dependencies and install named packages
-  command: /usr/local/go/bin/go get ./...
-  args:
-    chdir: "{{ hostvars[inventory_hostname].gopath }}/src/github.com/SamsungSLAV/boruta"
-
-- name: Copy Boruta server binary to /usr/local/bin
-  become: yes
-  copy:
-    remote_src: yes
-    src: "{{ hostvars[inventory_hostname].gopath }}/bin/boruta"
-    dest: /usr/local/bin/boruta
-    owner: root
-    group: root
-    mode: '0744'
-
-- name: Add service file for Boruta
-  become: yes
-  template:
-    src: boruta.service.j2
-    dest: /etc/systemd/system/boruta.service
-    owner: root
-    group: root
-    mode: '0644'
-
-- name: Enable and start Boruta server
-  become: yes
-  systemd:
-      daemon_reload: yes
-      enabled: yes
-      state: started
-      name: boruta
+- import_tasks: boruta-deploy.yml
+  tags:
+    - boruta
+    - boruta:deploy

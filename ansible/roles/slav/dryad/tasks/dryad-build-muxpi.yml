@@ -1,0 +1,27 @@
+---
+- name: Get MuxPi src
+  git:
+    repo: 'https://github.com/SamsungSLAV/muxpi'
+    dest: "{{ hostvars[inventory_hostname].gopath }}/src/github.com/SamsungSLAV/muxpi"
+    version: 'v0.1.0'
+
+- name: Get dependencies
+  command: /usr/local/go/bin/go get ./...
+  args:
+    chdir: "{{ hostvars[inventory_hostname].gopath }}/src/github.com/SamsungSLAV/muxpi"
+
+- name: Build stm executable
+  shell: >
+    {{ build_flags_muxpi }} /usr/local/go/bin/go build
+    -o "{{ hostvars[inventory_hostname].gopath }}/bin/linux_armv7/stm"
+    ./sw/nanopi/cmd/stm
+  args:
+    chdir: "{{ hostvars[inventory_hostname].gopath }}/src/github.com/SamsungSLAV/muxpi"
+
+- name: Build fota executable
+  shell: >
+    {{ build_flags_muxpi }} /usr/local/go/bin/go build
+    -o "{{ hostvars[inventory_hostname].gopath }}/bin/linux_armv7/fota"
+    ./sw/nanopi/cmd/fota
+  args:
+    chdir: "{{ hostvars[inventory_hostname].gopath }}/src/github.com/SamsungSLAV/muxpi"
