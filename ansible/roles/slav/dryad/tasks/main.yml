@@ -1,0 +1,22 @@
+---
+- import_tasks: dryad-reqs.yml
+  tags:
+    - dryad
+    - dryad:reqs
+
+- import_tasks: dryad-dirs.yml
+  tags:
+    - dryad
+    - dryad:dirs
+
+- import_tasks: dryad-build-muxpi.yml
+  tags:
+    - dryad
+    - dryad:build
+    - dryad:build:muxpi
+
+- import_tasks: dryad-build-boruta.yml
+  tags:
+    - dryad
+    - dryad:build
+    - dryad:build:boruta

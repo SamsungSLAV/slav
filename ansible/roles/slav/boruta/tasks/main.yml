@@ -1,0 +1,20 @@
+---
+- import_tasks: boruta-reqs.yml
+  tags:
+    - boruta
+    - boruta:reqs
+
+- import_tasks: boruta-dirs.yml
+  tags:
+    - boruta
+    - boruta:dirs
+
+- import_tasks: boruta-build.yml
+  tags:
+    - boruta
+    - boruta:build
+
+- import_tasks: boruta-deploy.yml
+  tags:
+    - boruta
+    - boruta:deploy

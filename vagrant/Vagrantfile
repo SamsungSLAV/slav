@@ -1,0 +1,22 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+host_ip = "192.168.121.1"
+
+$replace_dns = <<-SCRIPT
+  HOST_IP="$1"
+  rm -f /etc/resolv.conf # drop its dynamic management by systemd-resolved
+  echo nameserver "$HOST_IP" | tee /etc/resolv.conf
+SCRIPT
+
+Vagrant.configure("2") do |config|
+  config.vm.box = "generic/ubuntu1804"
+  config.vm.synced_folder "..", "/vagrant", type: "rsync", rsync__exclude: ".git/"
+  config.vm.network "private_network", ip: "192.168.111.10"
+
+  config.vm.provision "replace_dns", type: :shell, run: "always", inline: $replace_dns, args: host_ip
+  config.vm.provision "ansible" do |ansible|
+    ansible.playbook = "../ansible/main.yml"
+    ansible.inventory_path = "../ansible/inventory.yml"
+  end
+end

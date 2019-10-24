@@ -1,0 +1,33 @@
+---
+- name: Prepare servers
+  hosts: all_srvs
+  gather_facts: False # Default Ubuntu Cloud image comes without python; gathering facts without interpreter fails
+  become: yes
+  roles:
+      - common/ansible_runable
+      - common/packages_uptodate
+
+- name: Build Dryad executables for ARMv7
+  hosts: boruta_srv
+  vars:
+    build_flags_muxpi: GOOS=linux GOARCH=arm GOARM=7
+  roles:
+      - slav/dryad
+
+- name: Build and deploy Boruta
+  hosts: boruta_srv
+  vars:
+    - boruta_api_addr: "192.168.111.10:8487"
+    - boruta_rpc_addr: "192.168.111.10:7175"
+  roles:
+      - slav/boruta
+
+- name: Build and deploy Weles
+  hosts: weles_srv
+  vars:
+    - boruta_api_addr: "192.168.111.10:8487"
+    - weles_api_addr: "192.168.111.10"
+    - weles_api_port: "5010"
+    - weles_page_limit: "30"
+  roles:
+      - slav/weles

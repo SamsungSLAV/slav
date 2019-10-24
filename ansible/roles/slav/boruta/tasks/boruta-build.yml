@@ -1,0 +1,11 @@
+---
+- name: Get Boruta src
+  git:
+    repo: 'https://github.com/SamsungSLAV/boruta'
+    dest: "{{ hostvars[inventory_hostname].gopath }}/src/github.com/SamsungSLAV/boruta"
+    version: 'v0.1.0'
+
+- name: Get dependencies and install named packages
+  command: /usr/local/go/bin/go get ./...
+  args:
+    chdir: "{{ hostvars[inventory_hostname].gopath }}/src/github.com/SamsungSLAV/boruta"

@@ -1,0 +1,8 @@
+---
+- name: Update packages info
+  apt:
+    update_cache: yes
+
+- name: Upgrade packages
+  apt:
+    upgrade: full

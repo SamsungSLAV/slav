@@ -1,0 +1,19 @@
+---
+- name: Get Boruta src
+  git:
+    repo: 'https://github.com/SamsungSLAV/boruta'
+    dest: "{{ hostvars[inventory_hostname].gopath }}/src/github.com/SamsungSLAV/boruta"
+    version: 'v0.1.0'
+
+- name: Get dependencies
+  command: /usr/local/go/bin/go get ./...
+  args:
+    chdir: "{{ hostvars[inventory_hostname].gopath }}/src/github.com/SamsungSLAV/boruta"
+
+- name: Build dryad executable
+  shell: >
+    {{ build_flags_muxpi }} /usr/local/go/bin/go build
+    -o "{{ hostvars[inventory_hostname].gopath }}/bin/linux_armv7/dryad"
+    ./cmd/dryad
+  args:
+    chdir: "{{ hostvars[inventory_hostname].gopath }}/src/github.com/SamsungSLAV/boruta"
