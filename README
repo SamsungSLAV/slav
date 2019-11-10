@@ -36,6 +36,20 @@ These layers might be used together or independently.
 .. _Weles: https://github.com/SamsungSLAV/weles
 
 
+******
+Design
+******
+
+Dryad - (in slavic mythology free soul of the forest) is the Target Manager, the element that knows how to interact with DUT (Device Under Test), takes care of the single DUT and is fully aware of the capabilities that the DUT provides. Dryad requires only two interfaces: power supply and the network connection. If there is only one DUT in the network the Dryad i sufficient, otherwise we need Test Scheduler (Boruta)
+
+Boruta - (in mythology: caretaker of the forest and all living creatures) this is the Test Scheduler, which means it schedules access requests to the devices and provides convenient access to the assigned ones. Boruta requires manual work from the user (uploading and running the software, uploading test files).
+
+Dryad life cycle in Boruta:
+firstly Dryad is in a maintenance mode, can be brought to idle or unallocated state by the farm maintainer (Admin). If there is an access request and the specific Dryad matches the requirements Boruta assigns the Dryad, prepares the environment, ssh tunnel for the access is set up and the actions may be performed. This may the an interactive session with real user or an automated one (by the automated testing framework).
+
+Weles - (in mythology: ) is a lightweight automated testing framework, inspired by LAVA, with LAVA-like interface. Weles translates YAML job definitions into the actions that will be executed on DUTs (like deploy, boot, test and collect). Weles basically takes care of the whole process: send the request to Boruta, sets up a connection and comes back with the result.
+
+
 *******
 License
 *******
