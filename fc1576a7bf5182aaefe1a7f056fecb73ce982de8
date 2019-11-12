@@ -2,6 +2,167 @@
   "comments": [
     {
       "key": {
+        "uuid": "be4fe297_906601f7",
+        "filename": "README",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1015220
+      },
+      "writtenOn": "2019-11-12T11:35:32Z",
+      "side": 1,
+      "message": "This section will probably need to be divided into subsections in the future, i.e. \"Layers\", etc.\n\nI\u0027ll provide a patch once this is merge ready.",
+      "range": {
+        "startLine": 40,
+        "startChar": 0,
+        "endLine": 40,
+        "endChar": 6
+      },
+      "revId": "fc1576a7bf5182aaefe1a7f056fecb73ce982de8",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de1c0d93_e0a82828",
+        "filename": "README",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1015220
+      },
+      "writtenOn": "2019-11-12T11:35:32Z",
+      "side": 1,
+      "message": "full stop\n\nalso, break lines at about 100 characters or at the end of sentence (first one is easier to read, second to maintain change log)",
+      "range": {
+        "startLine": 43,
+        "startChar": 418,
+        "endLine": 43,
+        "endChar": 419
+      },
+      "revId": "fc1576a7bf5182aaefe1a7f056fecb73ce982de8",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e12d638c_615176bb",
+        "filename": "README",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1015220
+      },
+      "writtenOn": "2019-11-12T11:35:32Z",
+      "side": 1,
+      "message": "typo",
+      "range": {
+        "startLine": 43,
+        "startChar": 364,
+        "endLine": 43,
+        "endChar": 365
+      },
+      "revId": "fc1576a7bf5182aaefe1a7f056fecb73ce982de8",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86222f5b_fcc1cad7",
+        "filename": "README",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1015220
+      },
+      "writtenOn": "2019-11-12T11:35:32Z",
+      "side": 1,
+      "message": "Please consider moving trivia to another section. Let\u0027s leave only crucial information here.",
+      "range": {
+        "startLine": 43,
+        "startChar": 8,
+        "endLine": 43,
+        "endChar": 53
+      },
+      "revId": "fc1576a7bf5182aaefe1a7f056fecb73ce982de8",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e938d364_674e0cfa",
+        "filename": "README",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1015220
+      },
+      "writtenOn": "2019-11-12T11:35:32Z",
+      "side": 1,
+      "message": "trivia",
+      "range": {
+        "startLine": 45,
+        "startChar": 9,
+        "endLine": 45,
+        "endChar": 73
+      },
+      "revId": "fc1576a7bf5182aaefe1a7f056fecb73ce982de8",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7dbce4ae_d955848d",
+        "filename": "README",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1015220
+      },
+      "writtenOn": "2019-11-12T11:35:32Z",
+      "side": 1,
+      "message": "It looks like we might need subsections for every layer and then sub-subsections for additional information like this one.\n\nTake a look at http://docutils.sourceforge.net/docs/user/rst/quickref.html#section-structure",
+      "range": {
+        "startLine": 47,
+        "startChar": 0,
+        "endLine": 47,
+        "endChar": 27
+      },
+      "revId": "fc1576a7bf5182aaefe1a7f056fecb73ce982de8",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf974ead_50a4d8ef",
+        "filename": "README",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1015220
+      },
+      "writtenOn": "2019-11-12T11:35:32Z",
+      "side": 1,
+      "message": "... at first (?)\n\nI\u0027m not sure though, let me know what you think",
+      "range": {
+        "startLine": 48,
+        "startChar": 0,
+        "endLine": 48,
+        "endChar": 7
+      },
+      "revId": "fc1576a7bf5182aaefe1a7f056fecb73ce982de8",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a1e5ee8f_34ecfce0",
         "filename": "README",
         "patchSetId": 1
@@ -18,6 +179,29 @@
         "startChar": 22,
         "endLine": 50,
         "endChar": 23
+      },
+      "revId": "fc1576a7bf5182aaefe1a7f056fecb73ce982de8",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a939ce83_37a9e5ae",
+        "filename": "README",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1015220
+      },
+      "writtenOn": "2019-11-12T11:35:32Z",
+      "side": 1,
+      "message": "trivia",
+      "range": {
+        "startLine": 50,
+        "startChar": 8,
+        "endLine": 50,
+        "endChar": 21
       },
       "revId": "fc1576a7bf5182aaefe1a7f056fecb73ce982de8",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
