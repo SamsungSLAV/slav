@@ -2,10 +2,11 @@
 # vi: set ft=ruby :
 
 Vagrant.configure("2") do |config|
-  config.vm.box = "debian/stretch64"
+  config.vm.box = "debian/buster64"
 
   config.vm.provider :libvirt do |libvirt|
     libvirt.cpus = 2
+    libvirt.memory = 640
     libvirt.nested = true
   end
 
@@ -14,17 +15,17 @@ Vagrant.configure("2") do |config|
   config.vm.provision :libvirt, type: :shell, inline: <<-SHELL
     export DEBIAN_FRONTEND=noninteractive
     apt-get update
-    apt-get install --assume-yes --quiet qemu libvirt-daemon-system libvirt-clients ebtables dnsmasq
+    apt-get install --assume-yes --quiet qemu-kvm libvirt-daemon-system libvirt-clients ebtables dnsmasq
     usermod --append --groups libvirt vagrant
   SHELL
 
   config.vm.provision :vagrant, type: :shell, inline: <<-SHELL
-    wget --no-verbose https://releases.hashicorp.com/vagrant/2.1.5/vagrant_2.1.5_x86_64.deb
-    dpkg -i vagrant_2.1.5_x86_64.deb
+    wget --no-verbose https://releases.hashicorp.com/vagrant/2.2.16/vagrant_2.2.16_x86_64.deb
+    dpkg -i vagrant_2.2.16_x86_64.deb
   SHELL
 
   config.vm.provision :vagrant_libvirt_deps, type: :shell, inline: <<-SHELL
-    echo 'deb-src http://httpredir.debian.org/debian stretch main' >> /etc/apt/sources.list
+    echo 'deb-src http://httpredir.debian.org/debian buster main' >> /etc/apt/sources.list
     export DEBIAN_FRONTEND=noninteractive
     apt-get update
     apt-get build-dep --assume-yes --quiet vagrant ruby-libvirt
