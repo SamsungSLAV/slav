@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "15c2c5ed_076871de",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1015231
+      },
+      "writtenOn": "2021-08-13T20:21:39Z",
+      "side": 1,
+      "message": "As for the roadmap itself- as far as I understand the goal here is to showcase how SLAV can be used to test some targets, on the example of RISC-V Cyber Dryad.\nAs for other stuff that I\u0027d like to see - there are some patches that have been in limbo since 2018/2019, maybe we could bring them to merge/abandon?\nAnd lastly - while I understand benefits of having roadmap in git, I think we have already in place a far better alternative - GitHub issues. Given how many projects use them I feel it would be best to go with the flow. I added two comments to point out how moving this to GH Issues could improve workflow. Let me know what you think!",
+      "revId": "36bbc94a0927c3e2d707ba590c0d3987a7cc00fc",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "560dc7af_edc55771",
+        "filename": "ROADMAP.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1015231
+      },
+      "writtenOn": "2021-08-13T20:21:39Z",
+      "side": 1,
+      "message": "I reckon both should also get released after migration :D",
+      "range": {
+        "startLine": 9,
+        "startChar": 6,
+        "endLine": 9,
+        "endChar": 13
+      },
+      "revId": "36bbc94a0927c3e2d707ba590c0d3987a7cc00fc",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6106b216_11bcdec6",
+        "filename": "ROADMAP.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1015231
+      },
+      "writtenOn": "2021-08-13T20:21:39Z",
+      "side": 1,
+      "message": "this could be discussed in GH Issues (as in what tools to go for, what should be showcased exactly)",
+      "range": {
+        "startLine": 10,
+        "startChar": 3,
+        "endLine": 10,
+        "endChar": 69
+      },
+      "revId": "36bbc94a0927c3e2d707ba590c0d3987a7cc00fc",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "78b32b21_b52b101b",
+        "filename": "ROADMAP.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1015231
+      },
+      "writtenOn": "2021-08-13T20:21:39Z",
+      "side": 1,
+      "message": "I guess that its here due to being also dependent on \u0027encapsulate deployment\u0027 but it would fit just as well under # Provide RISC-V Cyber Dryad.\nWhich brings me to another argument pro GH issues: we could link the issues in GH to show relation, e.g. depends on: weles#xxx",
+      "range": {
+        "startLine": 11,
+        "startChar": 3,
+        "endLine": 11,
+        "endChar": 10
+      },
+      "revId": "36bbc94a0927c3e2d707ba590c0d3987a7cc00fc",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    }
+  ]
+}
