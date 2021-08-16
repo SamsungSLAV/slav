@@ -18,6 +18,41 @@
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1e7b8337_618cb6dc",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1015220
+      },
+      "writtenOn": "2021-08-16T08:10:16Z",
+      "side": 1,
+      "message": "\u003e (snip)\n\u003e As for other stuff that I\u0027d like to see - there are some patches that have been in limbo since 2018/2019, maybe we could bring them to merge/abandon?\n\nOK - I\u0027ll look into it, but won\u0027t move changes from Tizen.org to GerritHub.io. If a change is truly needed, I\u0027ll align relevant branches on both servers, merge the change (with fixes, if required) and realign branches again. Full migration seems like a too heavy investment\n\n\u003e And lastly - while I understand benefits of having roadmap in git, I think we have already in place a far better alternative - GitHub issues. Given how many projects use them I feel it would be best to go with the flow. I added two comments to point out how moving this to GH Issues could improve workflow. Let me know what you think!\n\nI like having roadmap simple, offline and migratable and GH Issues don\u0027t provide me the latter two afaik. Let\u0027s go with them anyway for the time being and see how well they\u0027ll fit",
+      "parentUuid": "15c2c5ed_076871de",
+      "revId": "36bbc94a0927c3e2d707ba590c0d3987a7cc00fc",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "700299a0_8935abd0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1015220
+      },
+      "writtenOn": "2021-08-16T08:10:16Z",
+      "side": 1,
+      "message": "I moved the roadmap to the GH Issues. Have a look and let me know what you think so this change can be safely abandoned",
+      "revId": "36bbc94a0927c3e2d707ba590c0d3987a7cc00fc",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "560dc7af_edc55771",
@@ -31,6 +66,30 @@
       "writtenOn": "2021-08-13T20:21:39Z",
       "side": 1,
       "message": "I reckon both should also get released after migration :D",
+      "range": {
+        "startLine": 9,
+        "startChar": 6,
+        "endLine": 9,
+        "endChar": 13
+      },
+      "revId": "36bbc94a0927c3e2d707ba590c0d3987a7cc00fc",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "34450d46_217601be",
+        "filename": "ROADMAP.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1015220
+      },
+      "writtenOn": "2021-08-16T08:10:16Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "560dc7af_edc55771",
       "range": {
         "startLine": 9,
         "startChar": 6,
@@ -64,6 +123,30 @@
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c6662cc8_de761287",
+        "filename": "ROADMAP.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1015220
+      },
+      "writtenOn": "2021-08-16T08:10:16Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "6106b216_11bcdec6",
+      "range": {
+        "startLine": 10,
+        "startChar": 3,
+        "endLine": 10,
+        "endChar": 69
+      },
+      "revId": "36bbc94a0927c3e2d707ba590c0d3987a7cc00fc",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "78b32b21_b52b101b",
@@ -77,6 +160,30 @@
       "writtenOn": "2021-08-13T20:21:39Z",
       "side": 1,
       "message": "I guess that its here due to being also dependent on \u0027encapsulate deployment\u0027 but it would fit just as well under # Provide RISC-V Cyber Dryad.\nWhich brings me to another argument pro GH issues: we could link the issues in GH to show relation, e.g. depends on: weles#xxx",
+      "range": {
+        "startLine": 11,
+        "startChar": 3,
+        "endLine": 11,
+        "endChar": 10
+      },
+      "revId": "36bbc94a0927c3e2d707ba590c0d3987a7cc00fc",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "eebb4073_0ddc3057",
+        "filename": "ROADMAP.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1015220
+      },
+      "writtenOn": "2021-08-16T08:10:16Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "78b32b21_b52b101b",
       "range": {
         "startLine": 11,
         "startChar": 3,
